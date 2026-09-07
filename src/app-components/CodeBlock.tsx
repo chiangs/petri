@@ -6,6 +6,7 @@ import ts from 'shiki/langs/typescript.mjs'
 import css from 'shiki/langs/css.mjs'
 import githubLight from 'shiki/themes/github-light.mjs'
 import githubDark from 'shiki/themes/github-dark.mjs'
+import { CopyButton } from './CopyButton'
 
 interface CodeBlockProps {
   code: string
@@ -43,11 +44,19 @@ export function CodeBlock({ code, lang = 'tsx' }: CodeBlockProps) {
     }
   }, [code, lang])
 
-  if (!html) {
-    return <pre className="code-block code-block--loading">{code}</pre>
-  }
+  const body = html ? (
+    <div
+      className="code-block-scroll"
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  ) : (
+    <pre className="code-block-scroll code-block--loading">{code}</pre>
+  )
 
   return (
-    <div className="code-block" dangerouslySetInnerHTML={{ __html: html }} />
+    <div className="code-block">
+      <CopyButton text={code} />
+      {body}
+    </div>
   )
 }

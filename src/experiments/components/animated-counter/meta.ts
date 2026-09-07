@@ -1,4 +1,4 @@
-import type { ExperimentMeta } from '../../lib/types'
+import type { ExperimentMeta } from '@/lib/types'
 
 const meta: ExperimentMeta = {
   title: 'Animated Counter',
