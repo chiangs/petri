@@ -1,0 +1,78 @@
+/*
+  Showcase-only styles for the frosted-glass-card experiment.
+
+  These are deliberately literal (raw rgba, SVG data-URI, keyframes) because they
+  demonstrate an effect that has no design-token equivalent. Not a pattern to copy
+  wholesale into dev-ready components.
+
+  IMPORTANT: `backdrop-filter` is silently disabled by the browser whenever an
+  ancestor establishes a 3D context (`transform`, `perspective`,
+  `transform-style: preserve-3d`) — which the card's flip wrapper does. So the
+  frost is NOT `backdrop-filter`. Instead every face carries its own blurred +
+  displaced *copy* of the moving field (`.fg-field-blur`), which a plain `filter`
+  handles fine inside a 3D transform. The whole face — blur included — rotates.
+*/
+
+/* Layer 1 per face: a copy of the moving field, blurred + saturated + rippled by
+   the SVG turbulence filter. `overflow` + `clip-path` keep the oversized inner
+   layers and the displaced filter output inside the rounded card rect. */
+.fg-field-blur {
+  overflow: hidden;
+  filter: blur(var(--fg-blur, 3px)) saturate(1.4) url(#fg-glass-displace);
+  clip-path: inset(0 round 1rem);
+}
+
+/* Layer 2: frost tint with a diagonal sheen — brighter where light hits the
+   top-left of the slab, thinner across the rest. */
+.fg-face-tint {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.24) 0%,
+    rgba(255, 255, 255, 0.09) 42%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+}
+
+/* Layer 3: dark scrim so white text clears WCAG AA over any backdrop colour. */
+.fg-face-scrim {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* Layer 4: the bevelled glass edge, painted ABOVE the field/tint/scrim so those
+   layers don't wash it out. All hairline-crisp — bright top lip + rim, then a
+   sharp 1-2px dark bottom line so the slab reads solid, not smudged. */
+.fg-face-edge {
+  border-radius: 1rem;
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 0 rgba(0, 0, 0, 0.4),
+    inset 0 -2px 1px -1px rgba(0, 0, 0, 0.35);
+}
+
+/* Scrolling diagonal wave lines behind the card. */
+@keyframes fg-scroll {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: 240px;
+  }
+}
+
+.fg-lines {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120' viewBox='0 0 240 120'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.7)' stroke-width='2'%3E%3Cpath d='M-20 20 C 40 -10, 80 50, 140 20 S 240 -10, 300 20'/%3E%3Cpath d='M-20 50 C 40 20, 80 80, 140 50 S 240 20, 300 50'/%3E%3Cpath d='M-20 80 C 40 50, 80 110, 140 80 S 240 50, 300 80'/%3E%3Cpath d='M-20 110 C 40 80, 80 140, 140 110 S 240 80, 300 110'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 240px 120px;
+  animation: fg-scroll 18s linear infinite;
+}
+
+.fg-lines[data-paused="true"] {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-lines {
+    animation: none;
+  }
+}

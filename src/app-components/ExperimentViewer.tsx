@@ -81,14 +81,18 @@ export function ExperimentViewer({ experiment }: ExperimentViewerProps) {
       </div>
     ) : null
 
-  const panel =
-    tab === 'preview' ? (
-      <div className="preview-stage">
+  // Keep the preview mounted while the Code tab is showing so each experiment's
+  // control state survives tab toggles — just hide it.
+  const codePanel =
+    tab === 'code' ? <CodeBlock code={codeSource} lang={codeLang} /> : null
+  const panel = (
+    <>
+      <div className="preview-stage" hidden={tab !== 'preview'}>
         <Component />
       </div>
-    ) : (
-      <CodeBlock code={codeSource} lang={codeLang} />
-    )
+      {codePanel}
+    </>
+  )
 
   return (
     <div className="viewer">
