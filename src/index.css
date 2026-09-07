@@ -2,16 +2,22 @@
 
 /*
   Token utilities for experiments. `@theme inline` keeps the generated utilities
-  (`bg-bg`, `text-ink`, `text-muted`, `border-border`, `bg-brand-500`,
-  `rounded-card`) pointing at the CSS vars below, so they stay theme-reactive.
+  (`bg-bg`, `bg-surface`, `text-ink`, `text-muted`, `border-border`,
+  `bg-brand-50/500/600`, `text-brand-700`, `rounded-card`, `rounded-control`)
+  pointing at the CSS vars below, so they stay theme-reactive.
 */
 @theme inline {
   --color-bg: var(--bg);
+  --color-surface: var(--code-bg);
   --color-ink: var(--text-h);
   --color-muted: var(--text);
   --color-border: var(--border);
+  --color-brand-50: var(--accent-bg);
   --color-brand-500: var(--accent);
+  --color-brand-600: var(--accent);
+  --color-brand-700: var(--text-h);
   --radius-card: 8px;
+  --radius-control: 6px;
 }
 
 /* Dark is the default. The light palette is opt-in via [data-theme='light'].
