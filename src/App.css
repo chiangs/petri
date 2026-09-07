@@ -1,0 +1,164 @@
+#root {
+  width: 100%;
+  max-width: 100%;
+  text-align: left;
+  border-inline: none;
+}
+
+.app {
+  display: flex;
+  min-height: 100svh;
+}
+
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  padding: 24px 16px;
+}
+
+.sidebar-title {
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--text-h);
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.sidebar-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebar-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.sidebar-item:hover {
+  background: var(--code-bg);
+}
+
+.sidebar-item--active {
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.main {
+  flex: 1;
+  padding: 32px 40px;
+  min-width: 0;
+}
+
+.viewer-header h2 {
+  margin-bottom: 4px;
+}
+
+.viewer-header p {
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.tag-list {
+  list-style: none;
+  display: flex;
+  gap: 6px;
+  padding: 0;
+  margin: 0 0 20px;
+}
+
+.tag {
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.viewer-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+
+.tab {
+  background: none;
+  border: none;
+  font: inherit;
+  font-size: 15px;
+  padding: 8px 14px;
+  cursor: pointer;
+  color: var(--text);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.tab--active {
+  color: var(--text-h);
+  border-bottom-color: var(--accent);
+}
+
+.preview-stage {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.empty-state {
+  color: var(--text);
+}
+
+.code-block {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: auto;
+  font-size: 14px;
+}
+
+.code-block pre {
+  margin: 0;
+  padding: 16px;
+}
+
+.code-block--loading {
+  padding: 16px;
+  background: var(--code-bg);
+  font-family: var(--mono);
+  white-space: pre-wrap;
+}
+
+/* shiki dual-theme: switch --shiki-light/--shiki-dark based on the same
+   media query the rest of the app uses for color-scheme */
+.code-block .shiki,
+.code-block .shiki span {
+  background-color: var(--shiki-light-bg) !important;
+  color: var(--shiki-light) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .code-block .shiki,
+  .code-block .shiki span {
+    background-color: var(--shiki-dark-bg) !important;
+    color: var(--shiki-dark) !important;
+  }
+}
