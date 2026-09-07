@@ -26,7 +26,7 @@ export function HeroSection({
   interactive,
 }: HeroSectionProps) {
   return (
-    <div className="flex min-h-[520px] flex-col overflow-hidden rounded-card border border-border bg-black sm:min-h-[620px]">
+    <div className="flex min-h-[520px] flex-col overflow-hidden rounded-card bg-black sm:min-h-[620px]">
       <NavBar links={navLinks} />
       <HeroVisual
         hero={hero}

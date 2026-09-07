@@ -24,7 +24,7 @@ export function SegmentedControl<T extends string>({
         className={cn(
           "rounded-control px-3 py-1.5 text-sm font-medium outline-none transition-colors",
           "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600",
-          selected ? "bg-brand-500 text-white" : "text-muted hover:bg-brand-50 hover:text-brand-700",
+          selected ? "bg-brand-500 text-bg" : "text-muted hover:bg-brand-50 hover:text-brand-700",
         )}
       >
         {option.label}

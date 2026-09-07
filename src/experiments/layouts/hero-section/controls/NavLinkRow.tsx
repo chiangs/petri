@@ -44,7 +44,7 @@ export function NavLinkRow({
         className={cn(
           "flex h-9 w-9 items-center justify-center rounded-control border border-border bg-surface text-muted transition-colors",
           "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600",
-          canMoveUp ? "hover:bg-canvas hover:text-ink" : "cursor-not-allowed opacity-40",
+          canMoveUp ? "hover:bg-brand-50 hover:text-ink" : "cursor-not-allowed opacity-40",
         )}
       >
         <span aria-hidden="true">↑</span>
@@ -57,7 +57,7 @@ export function NavLinkRow({
         className={cn(
           "flex h-9 w-9 items-center justify-center rounded-control border border-border bg-surface text-muted transition-colors",
           "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600",
-          canMoveDown ? "hover:bg-canvas hover:text-ink" : "cursor-not-allowed opacity-40",
+          canMoveDown ? "hover:bg-brand-50 hover:text-ink" : "cursor-not-allowed opacity-40",
         )}
       >
         <span aria-hidden="true">↓</span>
