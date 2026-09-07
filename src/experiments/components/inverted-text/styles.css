@@ -1,0 +1,95 @@
+/*
+  Scoped styling for the `inverted-text` experiment.
+
+  `.invert-text` is the requested effect: white fill + `mix-blend-mode: difference`
+  so the glyphs subtract whatever colour sits behind them. Named `-text` because
+  Tailwind v4 already ships an `.invert` filter utility.
+*/
+.invert-text {
+  color: #fff;
+  mix-blend-mode: difference;
+}
+
+/*
+  Default "controls off" backdrop. Two oversized layers of soft green / purple /
+  blue radial blobs, heavily blurred so their edges are amorphous, `screen`-blended
+  so they bleed into each other where they overlap. The layers counter-rotate and
+  breathe out of phase, so the combined shape keeps morphing while still circling.
+  `--swirl-duration` is set per-render from the speed control.
+*/
+.stage-bg--swirl {
+  background-color: #0b1220;
+  isolation: isolate;
+}
+
+.stage-bg--swirl::before,
+.stage-bg--swirl::after {
+  content: "";
+  position: absolute;
+  inset: -80%;
+  filter: blur(60px) saturate(1.7);
+  background-blend-mode: screen;
+  will-change: transform;
+}
+
+.stage-bg--swirl::before {
+  background:
+    radial-gradient(38% 46% at 30% 26%, #00e35c 0%, #00e35c 16%, rgb(0 227 92 / 0) 72%),
+    radial-gradient(42% 32% at 72% 32%, #9d1cff 0%, #9d1cff 16%, rgb(157 28 255 / 0) 74%),
+    radial-gradient(46% 42% at 54% 70%, #1a5cff 0%, #1a5cff 16%, rgb(26 92 255 / 0) 72%),
+    radial-gradient(30% 38% at 24% 76%, #00e35c 0%, #00e35c 16%, rgb(0 227 92 / 0) 78%);
+  animation: invert-swirl var(--swirl-duration, 18s) linear infinite;
+}
+
+.stage-bg--swirl::after {
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(50% 36% at 66% 58%, #9d1cff 0%, #9d1cff 16%, rgb(157 28 255 / 0) 74%),
+    radial-gradient(34% 46% at 40% 46%, #1a5cff 0%, #1a5cff 16%, rgb(26 92 255 / 0) 72%),
+    radial-gradient(40% 40% at 76% 82%, #00e35c 0%, #00e35c 16%, rgb(0 227 92 / 0) 74%);
+  animation: invert-swirl-reverse var(--swirl-duration, 18s) linear infinite;
+}
+
+@keyframes invert-swirl {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes invert-swirl-reverse {
+  0% {
+    transform: rotate(0deg) scale(1.15);
+  }
+  50% {
+    transform: rotate(-180deg) scale(0.95);
+  }
+  100% {
+    transform: rotate(-360deg) scale(1.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-bg--swirl::before,
+  .stage-bg--swirl::after {
+    animation: none;
+  }
+}
+
+/*
+  "Image" backdrop: a monochrome scene with a single vibrant subject dead centre,
+  so the text reads faintly over the grey field and flips hard over the subject.
+*/
+.stage-bg--image {
+  background: #333333 url("./subject.svg") center / cover no-repeat;
+}
+
+/* Same idea, but a real photograph: a red umbrella in near-white rain. */
+.stage-bg--photo {
+  background: #eeeeee url("./photo.jpg") center 38% / cover no-repeat;
+}
