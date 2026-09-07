@@ -193,16 +193,16 @@
   white-space: pre-wrap;
 }
 
-/* shiki dual-theme: dark is the default, light is opt-in via [data-theme='light']
-   — matching the palette in src/index.css */
+/* shiki dual-theme: keep the panel background on our themed --code-bg (so it
+   matches src/index.css in either theme) and only switch the token colours.
+   Dark is the default; light is opt-in via [data-theme='light']. */
 .code-block .shiki,
 .code-block .shiki span {
-  background-color: var(--shiki-dark-bg) !important;
+  background-color: var(--code-bg) !important;
   color: var(--shiki-dark) !important;
 }
 
 :root[data-theme='light'] .code-block .shiki,
 :root[data-theme='light'] .code-block .shiki span {
-  background-color: var(--shiki-light-bg) !important;
   color: var(--shiki-light) !important;
 }
