@@ -15,6 +15,8 @@
   flex-shrink: 0;
   border-right: 1px solid var(--border);
   padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar-title {
@@ -25,6 +27,28 @@
   font-size: 15px;
 }
 
+.sidebar-groups {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+.sidebar-group {
+  margin-bottom: 16px;
+}
+
+.sidebar-group-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  opacity: 0.7;
+  padding: 0 10px;
+  margin-bottom: 6px;
+}
+
 .sidebar-list {
   list-style: none;
   margin: 0;
@@ -32,6 +56,23 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+}
+
+.sidebar-badge {
+  margin-left: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  vertical-align: middle;
+}
+
+.sidebar-footer {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
 }
 
 .sidebar-item {
@@ -88,6 +129,11 @@
   border-radius: 999px;
   background: var(--accent-bg);
   color: var(--accent);
+}
+
+.tag--category {
+  background: var(--code-bg);
+  color: var(--text-h);
 }
 
 .viewer-tabs {
@@ -147,18 +193,16 @@
   white-space: pre-wrap;
 }
 
-/* shiki dual-theme: switch --shiki-light/--shiki-dark based on the same
-   media query the rest of the app uses for color-scheme */
+/* shiki dual-theme: dark is the default, light is opt-in via [data-theme='light']
+   — matching the palette in src/index.css */
 .code-block .shiki,
 .code-block .shiki span {
-  background-color: var(--shiki-light-bg) !important;
-  color: var(--shiki-light) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  color: var(--shiki-dark) !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  .code-block .shiki,
-  .code-block .shiki span {
-    background-color: var(--shiki-dark-bg) !important;
-    color: var(--shiki-dark) !important;
-  }
+:root[data-theme='light'] .code-block .shiki,
+:root[data-theme='light'] .code-block .shiki span {
+  background-color: var(--shiki-light-bg) !important;
+  color: var(--shiki-light) !important;
 }

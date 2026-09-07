@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { Experiment } from '../lib/types'
+import type { Experiment } from '@/lib/types'
 import { CodeBlock } from './CodeBlock'
 
 interface ExperimentViewerProps {
@@ -8,24 +8,46 @@ interface ExperimentViewerProps {
 
 type Tab = 'preview' | 'code'
 
+const categoryLabel: Record<Experiment['category'], string> = {
+  component: 'Component',
+  layout: 'Layout',
+}
+
 export function ExperimentViewer({ experiment }: ExperimentViewerProps) {
   const [tab, setTab] = useState<Tab>('preview')
   const { Component } = experiment
+
+  const hasTags = experiment.tags && experiment.tags.length > 0
+  const tagList = hasTags ? (
+    <ul className="tag-list">
+      <li className="tag tag--category">{categoryLabel[experiment.category]}</li>
+      {experiment.tags!.map((tag) => (
+        <li key={tag} className="tag">
+          {tag}
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <ul className="tag-list">
+      <li className="tag tag--category">{categoryLabel[experiment.category]}</li>
+    </ul>
+  )
+
+  const panel =
+    tab === 'preview' ? (
+      <div className="preview-stage">
+        <Component />
+      </div>
+    ) : (
+      <CodeBlock code={experiment.source} />
+    )
 
   return (
     <div className="viewer">
       <header className="viewer-header">
         <h2>{experiment.title}</h2>
         {experiment.description && <p>{experiment.description}</p>}
-        {experiment.tags && experiment.tags.length > 0 && (
-          <ul className="tag-list">
-            {experiment.tags.map((tag) => (
-              <li key={tag} className="tag">
-                {tag}
-              </li>
-            ))}
-          </ul>
-        )}
+        {tagList}
       </header>
 
       <div className="viewer-tabs">
@@ -43,15 +65,7 @@ export function ExperimentViewer({ experiment }: ExperimentViewerProps) {
         </button>
       </div>
 
-      <div className="viewer-panel">
-        {tab === 'preview' ? (
-          <div className="preview-stage">
-            <Component />
-          </div>
-        ) : (
-          <CodeBlock code={experiment.source} />
-        )}
-      </div>
+      <div className="viewer-panel">{panel}</div>
     </div>
   )
 }
