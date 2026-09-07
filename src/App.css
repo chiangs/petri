@@ -272,3 +272,7 @@
 :root[data-theme='light'] .code-block .shiki span {
   color: var(--shiki-light) !important;
 }
+
+.code-block .shiki code {
+  display: block;
+}
