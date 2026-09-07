@@ -21,6 +21,12 @@ const layoutSources = import.meta.glob<string>(
   { eager: true, query: '?raw', import: 'default' },
 )
 
+// Optional per-experiment stylesheet — powers the JSX/CSS toggle in the viewer.
+const styleSources = import.meta.glob<string>(
+  '/src/experiments/*/*/styles.css',
+  { eager: true, query: '?raw', import: 'default' },
+)
+
 const metas = import.meta.glob<{ default: ExperimentMeta }>(
   '/src/experiments/*/*/meta.ts',
   { eager: true },
@@ -48,6 +54,7 @@ function collect(
       category,
       Component: mod.default,
       source: sources[path],
+      css: styleSources[`/src/experiments/${dir}/${slug}/styles.css`],
       ...meta,
     }
   })

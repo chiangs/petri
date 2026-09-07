@@ -7,6 +7,15 @@ interface ExperimentViewerProps {
 }
 
 type Tab = 'preview' | 'code'
+type SourceLang = 'tsx' | 'css'
+
+const copy = {
+  preview: 'Preview',
+  code: 'Code',
+  jsx: 'JSX',
+  css: 'CSS',
+  sourceGroupLabel: 'Choose source language',
+} as const
 
 const categoryLabel: Record<Experiment['category'], string> = {
   component: 'Component',
@@ -15,23 +24,62 @@ const categoryLabel: Record<Experiment['category'], string> = {
 
 export function ExperimentViewer({ experiment }: ExperimentViewerProps) {
   const [tab, setTab] = useState<Tab>('preview')
+  const [sourceLang, setSourceLang] = useState<SourceLang>('tsx')
   const { Component } = experiment
 
-  const hasTags = experiment.tags && experiment.tags.length > 0
-  const tagList = hasTags ? (
+  const hasCss = typeof experiment.css === 'string'
+  const showCss = hasCss && sourceLang === 'css'
+  const codeSource = showCss ? experiment.css! : experiment.source
+  const codeLang = showCss ? 'css' : 'tsx'
+
+  const categoryTag = (
+    <li className="tag tag--category">{categoryLabel[experiment.category]}</li>
+  )
+  const extraTags = (experiment.tags ?? []).map((tag) => (
+    <li key={tag} className="tag">
+      {tag}
+    </li>
+  ))
+  const tagList = (
     <ul className="tag-list">
-      <li className="tag tag--category">{categoryLabel[experiment.category]}</li>
-      {experiment.tags!.map((tag) => (
-        <li key={tag} className="tag">
-          {tag}
-        </li>
-      ))}
-    </ul>
-  ) : (
-    <ul className="tag-list">
-      <li className="tag tag--category">{categoryLabel[experiment.category]}</li>
+      {categoryTag}
+      {extraTags}
     </ul>
   )
+
+  const description = experiment.description ? (
+    <p>{experiment.description}</p>
+  ) : null
+
+  const langToggle =
+    tab === 'code' && hasCss ? (
+      <div
+        className="lang-toggle"
+        role="group"
+        aria-label={copy.sourceGroupLabel}
+      >
+        <button
+          type="button"
+          className={
+            sourceLang === 'tsx' ? 'lang-option lang-option--active' : 'lang-option'
+          }
+          aria-pressed={sourceLang === 'tsx'}
+          onClick={() => setSourceLang('tsx')}
+        >
+          {copy.jsx}
+        </button>
+        <button
+          type="button"
+          className={
+            sourceLang === 'css' ? 'lang-option lang-option--active' : 'lang-option'
+          }
+          aria-pressed={sourceLang === 'css'}
+          onClick={() => setSourceLang('css')}
+        >
+          {copy.css}
+        </button>
+      </div>
+    ) : null
 
   const panel =
     tab === 'preview' ? (
@@ -39,14 +87,14 @@ export function ExperimentViewer({ experiment }: ExperimentViewerProps) {
         <Component />
       </div>
     ) : (
-      <CodeBlock code={experiment.source} />
+      <CodeBlock code={codeSource} lang={codeLang} />
     )
 
   return (
     <div className="viewer">
       <header className="viewer-header">
         <h2>{experiment.title}</h2>
-        {experiment.description && <p>{experiment.description}</p>}
+        {description}
         {tagList}
       </header>
 
@@ -55,16 +103,17 @@ export function ExperimentViewer({ experiment }: ExperimentViewerProps) {
           className={tab === 'preview' ? 'tab tab--active' : 'tab'}
           onClick={() => setTab('preview')}
         >
-          Preview
+          {copy.preview}
         </button>
         <button
           className={tab === 'code' ? 'tab tab--active' : 'tab'}
           onClick={() => setTab('code')}
         >
-          Code
+          {copy.code}
         </button>
       </div>
 
+      {langToggle}
       <div className="viewer-panel">{panel}</div>
     </div>
   )

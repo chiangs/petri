@@ -19,4 +19,6 @@ export interface Experiment extends ExperimentMeta {
   category: 'component' | 'layout'
   Component: ComponentType
   source: string
+  /** Raw contents of the experiment's `styles.css`, if it has one. */
+  css?: string
 }
