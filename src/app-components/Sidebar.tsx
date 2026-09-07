@@ -46,7 +46,7 @@ export function Sidebar({ experiments, activeSlug, onSelect }: SidebarProps) {
 
   return (
     <nav className="sidebar">
-      <div className="sidebar-title">petri</div>
+      <div className="sidebar-title">Petri</div>
       <ul className="sidebar-groups">{sections}</ul>
       <div className="sidebar-footer">
         <ThemeToggle />
