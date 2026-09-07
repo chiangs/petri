@@ -168,6 +168,11 @@
   min-height: 200px;
 }
 
+/* `display: flex` above outranks the [hidden] UA rule — restore it. */
+.preview-stage[hidden] {
+  display: none;
+}
+
 .empty-state {
   color: var(--text);
 }
