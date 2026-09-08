@@ -46,14 +46,15 @@
     box-shadow 160ms ease;
 }
 
-/* Oversized ghost page title. A real outline (`-webkit-text-stroke`, or offset
-   `text-shadow` copies) strokes *both* edges of every letter stroke, so thin
-   parts — the e / t crossbars, the v / w diagonals — show as doubled lines, and
-   Chromium ignores `paint-order` for `-webkit-text-stroke` so it can't be
-   collapsed. So: a flat translucent-accent fill, no stroke. Deliberately faint
-   and below AA contrast — see README Accessibility note. */
+/* Oversized ghost page title (`text-[5rem]`, bleeds past the bar into the
+   canvas). A barely-there outline: 3px `-webkit-text-stroke` in the subtle
+   `--color-border`, letter interiors left at `--bg`. Deliberately far below AA
+   text contrast — it's a watermark, not a heading you read; see README
+   Accessibility note. (`-webkit-text-stroke` doubles thin letter parts and
+   Chromium ignores `paint-order` to collapse it — at this near-invisible
+   contrast it doesn't register.) */
 .dashboard-shell .topbar-title {
-    color: color-mix(in srgb, var(--color-border) 1%, var(--bg));
-    -webkit-text-stroke: 3px var(--color-border);
-    paint-order: stroke;
+  color: color-mix(in srgb, var(--color-border) 1%, var(--bg));
+  -webkit-text-stroke: 3px var(--color-border);
+  paint-order: stroke;
 }
