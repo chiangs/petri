@@ -14,11 +14,11 @@ persistence.
 The shell (`DashboardShell`, `NavSidebar`, `TopBar`, …) is the piece; the nav
 selection is visual only (highlight + top-bar title follow the click, the canvas
 content is unchanged). The top-bar search (`TopBarSearch`) is likewise
-non-functional — a circular icon button (avatar height) that expands leftward on
-click into a pill field with a static placeholder (spring easing borrowed from
-the floating-label-input experiment); Escape or blur-while-empty collapses it,
-and it filters nothing. Live controls (`controls/`) stay above the shell and are
-scaffolding — snap toggle, grid size, grid overlay, reset layout.
+non-functional — a pill field centered in the bar with a static "Search for..."
+placeholder, always visible, that widens on focus and narrows on blur (spring
+easing borrowed from the floating-label-input experiment). It filters nothing.
+Live controls (`controls/`) stay above the shell and are scaffolding — snap
+toggle, grid size, grid overlay, reset layout.
 
 ## Accessibility note
 
@@ -36,6 +36,10 @@ Widgets are absolutely positioned from a state model (`layout.ts`) rather than a
 CSS grid or flow layout — deliberate, it's the whole point of the piece. A
 production implementation would persist that layout model per user and likely
 run collision/packing logic on it; here it is in-memory and overlap is allowed.
+
+The shell targets the gallery's standard width. It isn't responsive yet — the
+canvas has fixed pixel dimensions and the centered top-bar search crowds the
+title / user cluster below roughly 1000px. A mobile/reflow pass is a later step.
 
 The nav accent (`--nav-accent` in `styles.css`) is an intentional off-token
 colour — the shell mocks a product with its own brand, not petri chrome. It's a

@@ -1,43 +1,32 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
+import { useRef, useState, type KeyboardEvent } from 'react'
 import { cn } from '@/lib/cn'
 import { SearchIcon } from './SearchIcon'
 import { useReducedMotion } from './use-reduced-motion'
 
-// A non-functional search affordance for the top bar. Collapsed it's a circular
-// icon button (matching the user avatar's height); clicking expands it leftward
-// into a pill-shaped field with a static placeholder, wide enough for ~15
-// characters plus a clear button. It filters nothing — it's shell dressing.
+// A non-functional search field, centered in the top bar. Always visible; it
+// widens on focus (spring easing borrowed from the floating-label-input
+// experiment) and narrows back on blur. It filters nothing — shell dressing.
 
 const copy = {
-  open: 'Open search',
   label: 'Search',
   placeholder: 'Search for...',
   clear: 'Clear search',
 } as const
 
-const COLLAPSED_W = 36
-const EXPANDED_W = 208
+const REST_WIDTH = 180
+const FOCUS_WIDTH = 240
 
-// Spring easing lifted from the floating-label-input experiment.
 const SPRING_EASE = 'ease-[cubic-bezier(0.34,1.56,0.64,1)]'
 const SPRING_DURATION = 'duration-[260ms]'
 const NO_MOTION_DURATION = 'duration-0'
 
 export function TopBarSearch() {
-  const [expanded, setExpanded] = useState(false)
+  const [focused, setFocused] = useState(false)
   const [value, setValue] = useState('')
   const reducedMotion = useReducedMotion()
   const inputRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
-    if (expanded) inputRef.current?.focus()
-  }, [expanded])
-
   const duration = reducedMotion ? NO_MOTION_DURATION : SPRING_DURATION
-
-  const handleBlur = () => {
-    if (value.length === 0) setExpanded(false)
-  }
 
   const handleClear = () => {
     setValue('')
@@ -45,40 +34,20 @@ export function TopBarSearch() {
   }
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === 'Escape') {
-      setValue('')
-      setExpanded(false)
-      inputRef.current?.blur()
-    }
+    if (event.key === 'Escape') inputRef.current?.blur()
   }
 
   const wrapperClasses = cn(
-    'relative flex h-9 shrink-0 items-center overflow-hidden rounded-full border border-border transition-[width]',
+    // `max-w-full` lets the field cap at the available space instead of pushing
+    // the user cluster out when the bar is narrow.
+    'relative flex h-9 max-w-full items-center overflow-hidden rounded-full border border-border transition-[width]',
     'focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-brand-600',
     duration,
     SPRING_EASE,
   )
 
-  const leadingIconClasses = cn(
-    'pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-muted transition-opacity',
-    duration,
-    expanded ? 'opacity-100' : 'opacity-0',
-  )
-
-  const openButton = expanded ? null : (
-    <button
-      type="button"
-      aria-label={copy.open}
-      aria-expanded={false}
-      onClick={() => setExpanded(true)}
-      className="absolute inset-0 flex items-center justify-center rounded-full text-muted transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
-    >
-      <SearchIcon />
-    </button>
-  )
-
   const clearButton =
-    expanded && value.length > 0 ? (
+    value.length > 0 ? (
       <button
         type="button"
         aria-label={copy.clear}
@@ -93,8 +62,11 @@ export function TopBarSearch() {
     ) : null
 
   return (
-    <div className={wrapperClasses} style={{ width: expanded ? EXPANDED_W : COLLAPSED_W }}>
-      <span className={leadingIconClasses}>
+    <div
+      className={wrapperClasses}
+      style={{ width: focused ? FOCUS_WIDTH : REST_WIDTH }}
+    >
+      <span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-muted">
         <SearchIcon />
       </span>
       <input
@@ -103,17 +75,15 @@ export function TopBarSearch() {
         aria-label={copy.label}
         placeholder={copy.placeholder}
         value={value}
-        tabIndex={expanded ? undefined : -1}
         onChange={(event) => setValue(event.target.value)}
-        onBlur={handleBlur}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
         onKeyDown={handleKeyDown}
         className={cn(
           'h-full w-full bg-transparent pl-9 pr-8 text-xs text-ink outline-none placeholder:text-muted',
           '[&::-webkit-search-cancel-button]:appearance-none',
-          expanded ? '' : 'pointer-events-none',
         )}
       />
-      {openButton}
       {clearButton}
     </div>
   )
