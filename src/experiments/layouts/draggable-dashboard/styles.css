@@ -53,5 +53,7 @@
    collapsed. So: a flat translucent-accent fill, no stroke. Deliberately faint
    and below AA contrast — see README Accessibility note. */
 .dashboard-shell .topbar-title {
-  color: color-mix(in srgb, var(--nav-accent) 34%, transparent);
+    color: color-mix(in srgb, var(--color-border) 1%, var(--bg));
+    -webkit-text-stroke: 3px var(--color-border);
+    paint-order: stroke;
 }
