@@ -1,7 +1,7 @@
 // Dev-only controls for tuning the demo text. Scaffolding — left behind on promotion.
 
 const copy = {
-  heading: "Controls",
+  groupLabel: "Typography controls",
   fontSize: "Font size",
   lineHeight: "Line height",
   px: (n: number) => `${n}px`,
@@ -16,7 +16,8 @@ export interface TypographyControlsProps {
 }
 
 const rangeClass =
-  "w-full cursor-pointer accent-brand-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600";
+  "h-2 w-56 cursor-pointer appearance-none rounded-full bg-border accent-brand-500 " +
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600";
 
 export function TypographyControls({
   fontSize,
@@ -25,13 +26,15 @@ export function TypographyControls({
   onLineHeightChange,
 }: TypographyControlsProps) {
   return (
-    <section className="max-w-xs space-y-4 rounded-card border border-dashed border-border p-4">
-      <h2 className="text-sm font-semibold tracking-wide text-muted uppercase">{copy.heading}</h2>
-
+    <div
+      role="group"
+      aria-label={copy.groupLabel}
+      className="flex flex-wrap items-end gap-x-8 gap-y-4"
+    >
       <label className="flex flex-col gap-1 text-sm">
-        <span className="flex justify-between text-ink">
+        <span className="flex items-baseline justify-between gap-4 font-medium text-ink">
           {copy.fontSize}
-          <span className="text-muted">{copy.px(fontSize)}</span>
+          <span className="tabular-nums text-muted">{copy.px(fontSize)}</span>
         </span>
         <input
           type="range"
@@ -45,9 +48,9 @@ export function TypographyControls({
       </label>
 
       <label className="flex flex-col gap-1 text-sm">
-        <span className="flex justify-between text-ink">
+        <span className="flex items-baseline justify-between gap-4 font-medium text-ink">
           {copy.lineHeight}
-          <span className="text-muted">{copy.ratio(lineHeight)}</span>
+          <span className="tabular-nums text-muted">{copy.ratio(lineHeight)}</span>
         </span>
         <input
           type="range"
@@ -59,6 +62,6 @@ export function TypographyControls({
           className={rangeClass}
         />
       </label>
-    </section>
+    </div>
   );
 }
