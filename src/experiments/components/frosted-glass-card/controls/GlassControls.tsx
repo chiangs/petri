@@ -43,7 +43,7 @@ export function GlassControls({
     <div
       role="group"
       aria-label={copy.groupLabel}
-      className="flex flex-wrap items-end gap-x-8 gap-y-4 rounded-card border border-border bg-surface p-4"
+      className="flex flex-wrap items-end gap-x-8 gap-y-4"
     >
       <RangeControl
         label={copy.blurLabel}

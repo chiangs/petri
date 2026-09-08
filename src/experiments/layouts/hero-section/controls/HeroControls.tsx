@@ -51,7 +51,7 @@ export function HeroControls({
       aria-label={copy.groupLabel}
       // Dev scaffolding — its label text shouldn't trigger the Reader hero's glasses cue.
       data-hero-cue-ignore
-      className="grid grid-cols-1 gap-6 rounded-card bg-surface p-4 sm:grid-flow-col sm:grid-cols-2 sm:grid-rows-[auto_auto] sm:items-start sm:gap-x-8"
+      className="grid grid-cols-1 gap-6 sm:grid-flow-col sm:grid-cols-2 sm:grid-rows-[auto_auto] sm:items-start sm:gap-x-8"
     >
       <HeroSelectControl value={heroId} onChange={onHeroChange} />
       <HeroLayoutControl
