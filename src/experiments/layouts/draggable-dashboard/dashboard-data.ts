@@ -54,7 +54,7 @@ export const NAV_ITEMS: NavItemDef[] = [
 export const DEFAULT_NAV_ID: NavIconId = 'overview'
 
 export const USER = {
-  name: 'Sam Rivera',
-  role: 'Analytics Lead',
-  initials: 'SR',
+  name: 'Stephen Chiang',
+  role: 'Product Lead',
+  initials: 'SC',
 } as const

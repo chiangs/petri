@@ -33,6 +33,12 @@ CSS grid or flow layout — deliberate, it's the whole point of the piece. A
 production implementation would persist that layout model per user and likely
 run collision/packing logic on it; here it is in-memory and overlap is allowed.
 
+The nav accent (`nav-accent.ts`, `#6E56F8`) is an intentional off-token colour —
+the shell mocks a product with its own brand, not petri chrome. It's applied via
+inline style / SVG attributes rather than a token utility. Production would
+promote it to a real design token. Active-item text stays white on that fill
+(≈4.95:1, AA).
+
 ## Browser note
 
 Drag uses pointer events + CSS transforms (`@dnd-kit`), broadly supported.
