@@ -94,11 +94,30 @@ branch, which is usually already merged); commits use `promote(<slug>): <what ch
    `README.md` as a short comment on the affected code — the README itself doesn't move, but a
    documented gap or deviation shouldn't disappear with it.
 
+## App features
+
+Work on the **sandbox app itself** — everything *outside* `src/experiments/` and `src/dev-ready/`:
+the sidebar, the experiment viewer, the theme toggle, the auto-discovery registry
+(`src/lib/registry.ts`), design tokens in `src/index.css`, build config, `docs/`, and
+`.claude/skills/`. This is not experiment or promotion work — it changes the tooling designers
+use, not the library they build.
+
+- **Branch first**, before writing any files: `git checkout -b feat/<feature-name>` off current
+  `main` — same rule as experiments, never build app changes directly on `main`.
+- `docs/DESIGN.md`'s interaction-state and accessibility rules still apply to any UI you add or
+  touch. Match the existing plain-`className` style in `src/App.css` and `src/app-components/` —
+  the shell predates the token utilities and doesn't use them.
+- Keep the Constraints below: client-side only, no backend, no heavy dependencies.
+- Keep `main` runnable — don't break experiment auto-discovery.
+- Commits use the accurate Conventional Commits type per commit (`feat`, `fix`, `docs`,
+  `refactor`…), scoped to the feature where it fits: `feat(<feature-name>): <what changed>`. The
+  branch groups the work; it doesn't force a single type the way `exp()` / `promote()` do.
+
 ## Skills
 
 Repo-specific workflows live as slash-command skills in `.claude/skills/` (`commit`,
-`new-experiment`, `promote`, `accessibility-review`, …) — each folder's `SKILL.md` documents when
-it triggers. **Whenever a new skill folder is added, also add a one-line summary of it to
+`new-experiment`, `new-feature`, `promote`, `accessibility-review`, …) — each folder's `SKILL.md`
+documents when it triggers. **Whenever a new skill folder is added, also add a one-line summary of it to
 `README.md`'s skills section** so designers can see what's available without opening
 `.claude/skills/`.
 
@@ -116,4 +135,7 @@ it triggers. **Whenever a new skill folder is added, also add a one-line summary
 - Commit convention: `exp(<slug>): <what changed>`.
 - Promoting an experiment to `src/dev-ready/` gets its own branch `promote/<slug>` off `main`,
   commits `promote(<slug>): <what changed>`.
+- Work on the sandbox app itself (see App features, above) gets its own branch
+  `feat/<feature-name>` off `main`, commits `feat(<feature-name>): <what changed>` (or the
+  fitting Conventional Commits type per commit). Branch before writing any files.
 - No `develop` / `release` / `hotfix` branches.

@@ -29,6 +29,8 @@ Repo-specific workflows, run as slash commands (see `.claude/skills/`):
 
 - **new-experiment** — branches `exp/<slug>`, scaffolds from `_template`, asks about live
   controls, builds against `docs/DESIGN.md`.
+- **new-feature** — branches `feat/<feature-name>` for work on the sandbox app itself (sidebar,
+  viewer, tokens, build config, docs, skills), builds against `docs/DESIGN.md`.
 - **promote** — moves an approved experiment's piece to `src/dev-ready/` on a `promote/<slug>`
   branch.
 - **accessibility-review** — checks an experiment's semantic HTML and WCAG A/AA against
