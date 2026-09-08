@@ -8,7 +8,7 @@ export function Avatar({ initials }: AvatarProps) {
   return (
     <span
       aria-hidden="true"
-      className="flex size-9 shrink-0 items-center justify-center rounded-full bg-brand-500/15 text-sm font-medium text-ink"
+      className="avatar flex size-9 shrink-0 items-center justify-center rounded-full bg-brand-500/15 text-sm font-medium text-ink"
     >
       {initials}
     </span>

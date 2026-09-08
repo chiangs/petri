@@ -21,14 +21,27 @@
   filter: drop-shadow(0 0 5px color-mix(in srgb, var(--nav-accent) 45%, transparent));
 }
 
-/* Top-bar search takes the nav accent on its border + icon while focused only —
-   it reverts to default styling on blur even with a value present. Transitions
-   are driven by the Tailwind `transition-[…]` utility on the element. */
-.dashboard-shell .topbar-search--active {
+/* Accent border + ring — shared by the focused search, hovered avatar, and
+   hovered nav links. The search's transitions ride its Tailwind
+   `transition-[…]` utility; the avatar and nav links carry a transparent
+   border + their own transition below so the ring animates in. */
+.dashboard-shell .topbar-search--active,
+.dashboard-shell .avatar:hover,
+.dashboard-shell .nav-item:hover {
   border-color: var(--nav-accent);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--nav-accent) 20%, transparent);
 }
 
 .dashboard-shell .topbar-search--active .topbar-search__icon {
   color: var(--nav-accent);
+}
+
+.dashboard-shell .avatar,
+.dashboard-shell .nav-item {
+  border: 1px solid transparent;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
 }
