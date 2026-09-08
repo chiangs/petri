@@ -38,7 +38,8 @@ Four mode buttons plus one contextual control that swaps with the mode:
 - **Known contrast trade-off:** near the middle of the Dark → Light slider the text blends to
   mid-grey on mid-grey and visually disappears. That is the effect being demonstrated; the
   stage carries a `role="img"` + `aria-label` so the word stays available to assistive tech.
-- Non-standard values used on purpose: `text-[clamp(...)]` for fluid display sizing and a fixed
+- Non-standard values used on purpose: `text-[clamp(2.5rem,22cqw,15rem)]` (the stage is an
+  `@container`, so the word scales with the stage width, not the viewport) and a fixed
   `h-[32rem]` stage — a showcase canvas, not layout on the 4px content scale.
 - The swirl animation is disabled under `prefers-reduced-motion: reduce`.
 - **The essentials** code block (JSX / CSS toggle + Copy button) shows the minimum needed to

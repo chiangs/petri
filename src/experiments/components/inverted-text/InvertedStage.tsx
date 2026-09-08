@@ -25,10 +25,10 @@ export function InvertedStage({ mode, ...options }: InvertedStageProps) {
     <div
       role="img"
       aria-label={copy.stageLabel(MODE_LABEL[mode])}
-      className="relative isolate flex h-[32rem] min-h-96 items-center justify-center overflow-hidden rounded-card border border-border bg-bg"
+      className="@container relative isolate flex h-[32rem] min-h-96 items-center justify-center overflow-hidden rounded-card border border-border bg-bg"
     >
       <StageBackground mode={mode} {...options} />
-      <h1 className="invert-text relative px-6 text-center text-[clamp(2.5rem,15vw,11rem)] leading-none font-black tracking-tighter uppercase">
+      <h1 className="invert-text relative px-6 text-center text-[clamp(2.5rem,22cqw,15rem)] leading-none font-black tracking-tighter uppercase">
         {copy.word}
       </h1>
     </div>
