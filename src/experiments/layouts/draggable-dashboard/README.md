@@ -5,11 +5,16 @@ freely anywhere on the canvas, and can **optionally** snap to a grid while
 dragging and on drop. Built with `@dnd-kit/core` (`useDraggable`) plus
 `@dnd-kit/modifiers` (`createSnapModifier`, `restrictToParentElement`).
 
-**Step 1 of a multi-step build.** This step is the drag/snap foundation with
-labelled placeholder cards. Still to come: real data-heavy widgets (KPI tiles,
-table, activity feed), chart widgets, overlap handling, and layout persistence.
+**Step 1 of a multi-step build.** This step is the enterprise-app shell (nav
+rail with logo, top bar with user avatar) around the drag/snap canvas, still
+holding labelled placeholder cards. Still to come: real data-heavy widgets (KPI
+tiles, table, activity feed), chart widgets, overlap handling, and layout
+persistence.
 
-Live controls (`controls/`): snap toggle, grid size, grid overlay, reset layout.
+The shell (`DashboardShell`, `NavSidebar`, `TopBar`, …) is the piece; the nav
+selection is visual only (highlight + top-bar title follow the click, the canvas
+content is unchanged). Live controls (`controls/`) stay above the shell and are
+scaffolding — snap toggle, grid size, grid overlay, reset layout.
 
 ## Accessibility note
 
