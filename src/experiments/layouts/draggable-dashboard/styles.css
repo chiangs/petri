@@ -20,3 +20,15 @@
 .dashboard-shell .logo-mark {
   filter: drop-shadow(0 0 5px color-mix(in srgb, var(--nav-accent) 45%, transparent));
 }
+
+/* Top-bar search takes the nav accent on its border + icon while focused or
+   holding a query (transitions are driven by the Tailwind `transition-[…]`
+   utility on the element). */
+.dashboard-shell .topbar-search--active {
+  border-color: var(--nav-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nav-accent) 20%, transparent);
+}
+
+.dashboard-shell .topbar-search--active .topbar-search__icon {
+  color: var(--nav-accent);
+}

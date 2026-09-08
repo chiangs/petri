@@ -45,9 +45,10 @@ The nav accent (`--nav-accent` in `styles.css`) is an intentional off-token
 colour — the shell mocks a product with its own brand, not petri chrome. It's a
 scoped CSS var on `.dashboard-shell`, themed per mode (`#6f9bff` dark / `#3a54e8`
 light) so the active nav item's accent-coloured text clears AA (≥4.5:1) on the
-nav surface in both themes. The active item and logo mark also carry a soft
-accent `text-shadow` / `drop-shadow` halo (a faint glow). Production would
-promote the colour to a real design token.
+nav surface in both themes. The active nav item and logo mark carry a soft
+accent `text-shadow` / `drop-shadow` halo (a faint glow), and the top-bar
+search takes the accent on its border + icon (plus a soft ring) while focused
+or holding a query. Production would promote the colour to a real design token.
 
 ## Browser note
 

@@ -37,13 +37,17 @@ export function TopBarSearch() {
     if (event.key === 'Escape') inputRef.current?.blur()
   }
 
+  // Focused, or holding a query — the field takes the nav accent (see styles.css).
+  const active = focused || value.length > 0
+
   const wrapperClasses = cn(
     // `max-w-full` lets the field cap at the available space instead of pushing
     // the user cluster out when the bar is narrow.
-    'relative flex h-9 max-w-full items-center overflow-hidden rounded-full border border-border transition-[width]',
-    'focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-brand-600',
+    'topbar-search relative flex h-9 max-w-full items-center overflow-hidden rounded-full border border-border',
+    'transition-[width,border-color,box-shadow]',
     duration,
     SPRING_EASE,
+    active && 'topbar-search--active',
   )
 
   const clearButton =
@@ -66,7 +70,7 @@ export function TopBarSearch() {
       className={wrapperClasses}
       style={{ width: focused ? FOCUS_WIDTH : REST_WIDTH }}
     >
-      <span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-muted">
+      <span className="topbar-search__icon pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-muted transition-colors">
         <SearchIcon />
       </span>
       <input
