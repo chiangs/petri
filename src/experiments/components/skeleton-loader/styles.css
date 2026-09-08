@@ -1,0 +1,51 @@
+/*
+  Scoped styling for the `skeleton-loader` experiment.
+
+  `.skeleton` is the placeholder shape: a token-coloured box with one moving
+  highlight band swept across it. The band is a single mid-grey translucent
+  linear-gradient — light enough to read as a sheen over the dark `--border`
+  fill, dark enough to read over the light one — so the same gradient works in
+  both themes with no per-theme vars.
+
+  `background-size: 200% 100%` makes the gradient twice the box width; the
+  keyframe slides `background-position` a full 200% so the band travels edge to
+  edge. `prefers-reduced-motion` drops the band and pulses opacity instead.
+*/
+.skeleton {
+  background-color: var(--border);
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    rgba(140, 140, 140, 0.18),
+    transparent
+  );
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  animation: skeleton-sweep 1.2s linear infinite;
+}
+
+@keyframes skeleton-sweep {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    background-image: none;
+    animation: skeleton-pulse 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
