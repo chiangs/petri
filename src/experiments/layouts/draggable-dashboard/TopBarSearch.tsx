@@ -23,7 +23,7 @@ const SPRING_DURATION = 'duration-[260ms]'
 const NO_MOTION_DURATION = 'duration-0'
 
 const REST_TRANSFORM = 'translate(0, -50%)'
-const FLOAT_TRANSFORM = 'translate(0, -17px) scale(0.75)'
+const FLOAT_TRANSFORM = 'translate(0, -16px) scale(0.8)'
 
 export function TopBarSearch() {
   const [expanded, setExpanded] = useState(false)
@@ -72,7 +72,7 @@ export function TopBarSearch() {
   )
 
   const labelClasses = cn(
-    'pointer-events-none absolute left-10 top-1/2 origin-left text-sm leading-none text-muted transition-[transform,opacity]',
+    'pointer-events-none absolute left-10 top-1/2 origin-left text-xs leading-none text-muted transition-[transform,opacity]',
     duration,
     SPRING_EASE,
     expanded ? 'opacity-100' : 'opacity-0',
@@ -124,7 +124,7 @@ export function TopBarSearch() {
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
         className={cn(
-          'h-full w-full bg-transparent pl-10 pr-9 text-sm text-ink outline-none',
+          'h-full w-full bg-transparent pl-10 pr-9 text-xs text-ink outline-none',
           '[&::-webkit-search-cancel-button]:appearance-none',
           expanded ? '' : 'pointer-events-none',
         )}
