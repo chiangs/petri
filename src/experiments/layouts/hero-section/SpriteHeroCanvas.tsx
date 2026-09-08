@@ -16,6 +16,14 @@ interface SpriteHeroCanvasProps {
   behavior: SpriteBehavior;
   /** "cursor-x" only — the frame it rests on when the pointer is away. */
   idleFrame: number;
+  /**
+   * "cursor-x" only, optional. Last frame of the gaze pan; frames after it (up to
+   * the last) are a head-tilt look-down the hook scrubs with pointer-Y once the
+   * pointer drops below the subject's head. Omit for a plain pan.
+   */
+  panEndFrame?: number;
+  /** "cursor-x" only. Set when the pan sheet runs right→left (frame 0 = rightward gaze). */
+  panFromRight?: boolean;
   /** How the frame fills the hero area. Tall figures use "contain" plus a `background`. */
   objectFit: "cover" | "contain";
   /** CSS background for the canvas element — shows through the "contain" letterbox. */
@@ -40,6 +48,8 @@ export function SpriteHeroCanvas({
   frameHeight,
   behavior,
   idleFrame,
+  panEndFrame,
+  panFromRight,
   objectFit,
   background,
   interactive,
@@ -63,7 +73,13 @@ export function SpriteHeroCanvas({
   }, [sheetUrl]);
 
   const shared = { canvasRef, image, frameCount, columns, frameWidth, frameHeight, interactive };
-  useSpriteScrub({ ...shared, idleFrame, active: behavior === "cursor-x" });
+  useSpriteScrub({
+    ...shared,
+    idleFrame,
+    panEndFrame,
+    panFromRight,
+    active: behavior === "cursor-x",
+  });
   useSpriteCue({ ...shared, active: behavior === "text-cue" });
 
   const fitClass = objectFit === "contain" ? "object-contain" : "object-cover object-center";

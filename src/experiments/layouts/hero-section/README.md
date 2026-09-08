@@ -7,7 +7,13 @@ below. Three heroes, two interaction behaviours:
 - **`"cursor-x"`** (`use-sprite-scrub.ts`) — Cat and Frog. Frames run monotonically from a "left"
   pose through a centre pose to a "right" pose, so cursor X maps straight onto the frame index.
   The pointer is tracked on `window`, so the character keeps following the cursor even outside the
-  image; it eases back to its centre idle pose only when the cursor leaves the window.
+  image; it eases back to its centre idle pose only when the cursor leaves the window. The Cat also
+  passes `panEndFrame` (its pan sheet runs right→left, so it sets `panFromRight` to invert X): the
+  pan runs `0`→`panEndFrame` and is untouched by cursor Y while the pointer is level with or above
+  the cat. Once the pointer drops below the cat's chin (computed through `object-cover`), the pan
+  first settles to `panEndFrame`, then cursor **Y** carries the target on through the remaining
+  frames — a head-tilt look-down — as long as the cursor is at the cat's centre or left (the pose
+  faces down-left); below and to the right the cat keeps panning (looks right).
 - **`"text-cue"`** (`use-sprite-cue.ts`) — Reader. Plays the sheet forward (frame 0 → last) once
   the cursor settles on real text, and back to frame 0 once it's been away from text for a beat.
   "Over text" is tracked from element enter/leave (`mouseover` / `mouseout`), not from sampling
@@ -38,11 +44,22 @@ timing constants are fixed in the two hooks, not exposed as controls.
 Each was cut from a 24fps AI-generated clip with FFmpeg. A grid rather than a single row keeps
 frames near source resolution while staying under the 16383px WebP dimension limit.
 
-- **Cat** (`heroes/cat/cat-sprite.webp`) — the ~1.9s sub-range where the cat turns its head
-  left→right *while keeping its gaze up* (the fuller turn dips the gaze down-right, which read
-  wrong for a cursor over the top nav); 45 native frames, no interpolation (optical-flow
-  interpolation softened the image, and cross-fading adjacent frames ghosted the ears while
-  turning); 880×378, 9×5 grid, WebP q90 (~585 KB). The frame is wide, so `object-cover`.
+- **Cat** — a gaze pan (screen-left → screen-right, gaze held *up*) that carries on into a
+  head-tilt look-down. **WIP (`exp/cat-sprite-hires`, uncommitted)** — needs a feel check in
+  `npm run dev`. Two sheets in the folder:
+  - `cat-sprite-hires.webp` (**in use**) — 45 native frames from the first ~1.88s of a
+    1920×1080 24fps clip (`ffmpeg -t 1.88 -vf "fps=24"`, no reversal), `magick montage
+    -tile 5x9 -mode Concatenate`; no interpolation; 1920×1080, 5×9 grid (9600×9720), WebP q90
+    (~1.9 MB). `object-cover`. Frames read: 0 = gaze screen-*right* → `panEndFrame` (21) = gaze
+    screen-left (the pan — hence `panFromRight`) → 21–44 the head tilts down into a curious
+    look-down (last frame ≈ the deepest peer). Cursor X drives the pan; once the cursor is
+    below the cat's chin the pan settles to frame 21 then cursor Y carries the target through
+    21→44. The clip continues past frame 44 into a turn fully away — trimmed off. Decodes to ~93 MP — over older iOS
+    Safari's ~16 MP single-image ceiling (under the 16383px WebP dimension cap); see Browser
+    note.
+  - `cat-sprite.webp` (kept, not imported) — the original lower-res version: ~1.9s sub-range,
+    45 native frames, 880×378, 9×5 grid (7920×1890), WebP q90 (~585 KB). Swap the import in
+    `cat-sprite.ts` back to revert.
 - **Frog** (`heroes/frog/frog-sprite.webp`) — a dance: points screen-left, arms up (centre),
   points screen-right; 25 frames resampled from that sub-range; 1024×534, 5×5 grid, WebP q90
   (~660 KB). Tall standing figure → `object-contain` with a `background` gradient matching the
@@ -61,10 +78,16 @@ frames near source resolution while staying under the 16383px WebP dimension lim
   devices the hero simply rests on its resting frame — no scrub, no cue. Acceptable for this
   prototype; a mobile-facing production version would need a different input (scroll-linked,
   device tilt, an autoplay loop).
-- The sheets (cat 7920×1890, frog 5120×2670, reader 5120×3200) are well under the **16383px WebP
+- The frog (5120×2670) and reader (5120×3200) sheets are well under the **16383px WebP
   dimension limit** and Firefox's 32767px image cap. Decoded sizes (~14–16 MP) sit around the
   ~16 MP ceiling older iOS Safari applied to a single image; a substantially larger animation
   would need to check that limit or split into multiple sheets.
+- The hi-res cat sheet (`cat-sprite-hires.webp`, 9600×9720, 1920×1080 frames) is under the
+  16383px WebP dimension cap on both axes and Firefox's 32767px cap, but decodes to **~93 MP**
+  — well past the ~16 MP single-image ceiling older iOS Safari applied. Fine on current
+  desktop Chrome/Firefox/Safari; a mobile-facing version would need smaller frames or a split
+  sheet. The original 880×378 `cat-sprite.webp` (7920×1890, ~15 MP) stays in the folder as the
+  safe fallback.
 - `object-cover` (cat) crops the frame on very tall/wide hero areas; `object-contain` (frog,
   reader) letterboxes it, with the gap filled by a CSS `background` matching the clip so it reads
   full-bleed at any hero aspect.
