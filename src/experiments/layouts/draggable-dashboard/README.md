@@ -14,11 +14,11 @@ persistence.
 The shell (`DashboardShell`, `NavSidebar`, `TopBar`, …) is the piece; the nav
 selection is visual only (highlight + top-bar title follow the click, the canvas
 content is unchanged). The top-bar search (`TopBarSearch`) is likewise
-non-functional — it collapses to a circular icon button and expands leftward
-into a floating-label field (mechanic mirrored from the floating-label-input
-experiment) on click, but filters nothing. Live controls (`controls/`) stay
-above the shell and are scaffolding — snap toggle, grid size, grid overlay,
-reset layout.
+non-functional — a circular icon button (avatar height) that expands leftward on
+click into a pill field with a static placeholder (spring easing borrowed from
+the floating-label-input experiment); Escape or blur-while-empty collapses it,
+and it filters nothing. Live controls (`controls/`) stay above the shell and are
+scaffolding — snap toggle, grid size, grid overlay, reset layout.
 
 ## Accessibility note
 
