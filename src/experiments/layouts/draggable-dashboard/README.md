@@ -33,11 +33,11 @@ CSS grid or flow layout — deliberate, it's the whole point of the piece. A
 production implementation would persist that layout model per user and likely
 run collision/packing logic on it; here it is in-memory and overlap is allowed.
 
-The nav accent (`nav-accent.ts`, `#6E56F8`) is an intentional off-token colour —
-the shell mocks a product with its own brand, not petri chrome. It's applied via
-inline style / SVG attributes rather than a token utility. Production would
-promote it to a real design token. Active-item text stays white on that fill
-(≈4.95:1, AA).
+The nav accent (`--nav-accent` in `styles.css`) is an intentional off-token
+colour — the shell mocks a product with its own brand, not petri chrome. It's a
+scoped CSS var on `.dashboard-shell`, themed per mode (`#9b7dff` dark / `#7c3aed`
+light) so the active nav item's accent-coloured text clears AA (≥4.5:1) on the
+nav surface in both themes. Production would promote it to a real design token.
 
 ## Browser note
 

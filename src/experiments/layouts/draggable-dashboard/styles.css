@@ -1,0 +1,11 @@
+/* Nav accent — a vivid blue-purple, intentionally off-token (the shell mocks a
+   product with its own brand, not petri chrome). Themed per mode so the active
+   nav item's accent-coloured text still clears WCAG AA (4.5:1) against the nav
+   surface in both dark and light. */
+.dashboard-shell {
+  --nav-accent: #9b7dff;
+}
+
+:root[data-theme='light'] .dashboard-shell {
+  --nav-accent: #7c3aed;
+}
