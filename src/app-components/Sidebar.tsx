@@ -1,5 +1,13 @@
+import { useState } from 'react'
 import type { Experiment } from '@/lib/types'
+import { searchExperiments } from '@/lib/experiment-search'
+import { SearchInput } from './SearchInput'
 import { ThemeToggle } from './ThemeToggle'
+
+const copy = {
+  searchLabel: 'Search experiments',
+  noMatches: (query: string) => `No experiments match “${query}”`,
+} as const
 
 interface SidebarProps {
   experiments: Experiment[]
@@ -13,10 +21,15 @@ const groups: { category: Experiment['category']; label: string }[] = [
 ]
 
 export function Sidebar({ experiments, activeSlug, onSelect }: SidebarProps) {
+  const [query, setQuery] = useState('')
+
+  const visible = searchExperiments(experiments, query)
+  const noMatches = query.trim().length > 0 && visible.length === 0
+
   const sections = groups
     .map(({ category, label }) => ({
       label,
-      items: experiments.filter((e) => e.category === category),
+      items: visible.filter((e) => e.category === category),
     }))
     .filter((section) => section.items.length > 0)
     .map(({ label, items }) => (
@@ -44,13 +57,27 @@ export function Sidebar({ experiments, activeSlug, onSelect }: SidebarProps) {
       </li>
     ))
 
+  const list = noMatches ? (
+    <p className="sidebar-empty">{copy.noMatches(query.trim())}</p>
+  ) : (
+    <ul className="sidebar-groups">{sections}</ul>
+  )
+
   return (
     <nav className="sidebar">
       <div className="sidebar-title">Petri</div>
       <div className="sidebar-theme">
         <ThemeToggle />
       </div>
-      <ul className="sidebar-groups">{sections}</ul>
+      <div className="sidebar-search">
+        <SearchInput
+          id="sidebar-search"
+          label={copy.searchLabel}
+          value={query}
+          onChange={setQuery}
+        />
+      </div>
+      {list}
     </nav>
   )
 }
