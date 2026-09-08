@@ -46,10 +46,12 @@
     box-shadow 160ms ease;
 }
 
-/* Oversized ghost page title — accent outline, faint accent fill.
-   `-webkit-text-stroke` is prefixed but implemented across current
-   Chrome / Firefox / Safari. */
+/* Oversized ghost page title. A real outline (`-webkit-text-stroke`, or offset
+   `text-shadow` copies) strokes *both* edges of every letter stroke, so thin
+   parts — the e / t crossbars, the v / w diagonals — show as doubled lines, and
+   Chromium ignores `paint-order` for `-webkit-text-stroke` so it can't be
+   collapsed. So: a flat translucent-accent fill, no stroke. Deliberately faint
+   and below AA contrast — see README Accessibility note. */
 .dashboard-shell .topbar-title {
-  color: color-mix(in srgb, var(--nav-accent) 14%, transparent);
-  -webkit-text-stroke: 1px var(--nav-accent);
+  color: color-mix(in srgb, var(--nav-accent) 34%, transparent);
 }

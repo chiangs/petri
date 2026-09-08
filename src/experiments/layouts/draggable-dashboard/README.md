@@ -30,6 +30,13 @@ step 1: the keyboard step is dnd-kit's default 25px rather than the current grid
 size, and there is no explicit "reset this widget" affordance for keyboard users
 beyond the global Reset layout button. Tracked for a later step.
 
+The oversized top-bar page title is a decorative watermark treatment — a faint
+translucent-accent fill that sits below AA text contrast. It stays a real
+`<h2>` in the DOM for assistive tech, and the current page is also indicated by
+the active nav item (`aria-current="page"`), so the low contrast doesn't lose
+information. A true outline (`-webkit-text-stroke`) was dropped because it
+doubles thin letter parts and Chromium ignores `paint-order` to fix it.
+
 ## Best-practice note
 
 Widgets are absolutely positioned from a state model (`layout.ts`) rather than a
@@ -56,9 +63,9 @@ Drag uses pointer events + CSS transforms (`@dnd-kit`), broadly supported.
 `touch-action: none` is set on the drag handles so touch drags don't scroll the
 page — worth a check on iOS Safari when this experiment gets a mobile pass.
 
-The nav glow uses `color-mix()` (Baseline 2023 — current Chrome/Firefox/Safari).
-Older engines drop the `text-shadow` / `filter` declaration and simply show no
-glow; nothing else depends on it.
+The nav glow and the page-title fill use `color-mix()` (Baseline 2023 — current
+Chrome/Firefox/Safari). Older engines drop those declarations and simply show
+no glow / no title tint; nothing else depends on it.
 
 The oversized page title is drawn as outlined text — `-webkit-text-stroke` in
 the accent with a near-transparent accent fill. The property is prefixed but
