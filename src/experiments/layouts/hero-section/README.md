@@ -61,9 +61,10 @@ frames near source resolution while staying under the 16383px WebP dimension lim
     45 native frames, 880×378, 9×5 grid (7920×1890), WebP q90 (~585 KB). Swap the import in
     `cat-sprite.ts` back to revert.
 - **Frog** (`heroes/frog/frog-sprite.webp`) — a dance: points screen-left, arms up (centre),
-  points screen-right; 25 frames resampled from that sub-range; 1024×534, 5×5 grid, WebP q90
-  (~660 KB). Tall standing figure → `object-contain` with a `background` gradient matching the
-  clip's own background, so the letterbox is invisible.
+  points screen-right; 28 frames from the ~1.3–4.0s sub-range (`-vf "crop=1600:1000:200:50,
+  fps=10"`), native crop resolution; 1600×1000, 7×4 grid (11200×4000), WebP q90 (~1.7 MB).
+  Tall standing figure → `object-contain` with a `background` gradient matching the clip's
+  own background, so the letterbox is invisible.
 - **Reader** (`heroes/reader/reader-sprite.webp`) — the first ~2.2s of a man putting reading
   glasses on: frame 0 is "no glasses", the last frame is glasses on with a hand at the temple;
   25 frames, 1024×640, 5×5 grid, WebP q84 (~640 KB). Portrait → `object-contain` with a dark
@@ -78,10 +79,11 @@ frames near source resolution while staying under the 16383px WebP dimension lim
   devices the hero simply rests on its resting frame — no scrub, no cue. Acceptable for this
   prototype; a mobile-facing production version would need a different input (scroll-linked,
   device tilt, an autoplay loop).
-- The frog (5120×2670) and reader (5120×3200) sheets are well under the **16383px WebP
-  dimension limit** and Firefox's 32767px image cap. Decoded sizes (~14–16 MP) sit around the
-  ~16 MP ceiling older iOS Safari applied to a single image; a substantially larger animation
-  would need to check that limit or split into multiple sheets.
+- The reader sheet (5120×3200, ~16 MP decoded) is under the **16383px WebP dimension limit**
+  and Firefox's 32767px cap but sits right at the ~16 MP ceiling older iOS Safari applied to a
+  single image. The frog sheet (11200×4000, ~45 MP) and the hi-res cat (below) are well past
+  that iOS ceiling — fine on current desktop, but a mobile-facing version would need smaller
+  frames or split sheets.
 - The hi-res cat sheet (`cat-sprite-hires.webp`, 9600×9720, 1920×1080 frames) is under the
   16383px WebP dimension cap on both axes and Firefox's 32767px cap, but decodes to **~93 MP**
   — well past the ~16 MP single-image ceiling older iOS Safari applied. Fine on current
