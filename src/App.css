@@ -73,6 +73,17 @@
   margin-bottom: 20px;
 }
 
+.sidebar-search {
+  margin-bottom: 16px;
+}
+
+.sidebar-empty {
+  padding: 0 10px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text);
+}
+
 .sidebar-item {
   display: block;
   width: 100%;
