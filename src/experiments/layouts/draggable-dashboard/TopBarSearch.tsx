@@ -40,7 +40,7 @@ export function TopBarSearch() {
   const wrapperClasses = cn(
     // `max-w-full` lets the field cap at the available space instead of pushing
     // the user cluster out when the bar is narrow.
-    'topbar-search relative flex h-9 max-w-full items-center overflow-hidden rounded-full border border-border',
+    'topbar-search relative flex h-9 max-w-full items-center overflow-hidden rounded-full border border-border bg-bg',
     'transition-[width,border-color,box-shadow]',
     duration,
     SPRING_EASE,
