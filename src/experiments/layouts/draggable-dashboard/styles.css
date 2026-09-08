@@ -45,3 +45,11 @@
     border-color 160ms ease,
     box-shadow 160ms ease;
 }
+
+/* Oversized ghost page title — accent outline, faint accent fill.
+   `-webkit-text-stroke` is prefixed but implemented across current
+   Chrome / Firefox / Safari. */
+.dashboard-shell .topbar-title {
+  color: color-mix(in srgb, var(--nav-accent) 14%, transparent);
+  -webkit-text-stroke: 1px var(--nav-accent);
+}

@@ -59,3 +59,10 @@ page — worth a check on iOS Safari when this experiment gets a mobile pass.
 The nav glow uses `color-mix()` (Baseline 2023 — current Chrome/Firefox/Safari).
 Older engines drop the `text-shadow` / `filter` declaration and simply show no
 glow; nothing else depends on it.
+
+The oversized page title is drawn as outlined text — `-webkit-text-stroke` in
+the accent with a near-transparent accent fill. The property is prefixed but
+implemented across current Chrome, Firefox, and Safari; without it the title
+falls back to the faint fill alone (very low contrast). The accent stroke on
+the bar background clears WCAG AA for large text (≥3:1) in both themes, and the
+current page is also indicated by the active nav item.
