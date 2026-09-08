@@ -1,11 +1,22 @@
-/* Nav accent — a vivid blue-purple, intentionally off-token (the shell mocks a
-   product with its own brand, not petri chrome). Themed per mode so the active
-   nav item's accent-coloured text still clears WCAG AA (4.5:1) against the nav
-   surface in both dark and light. */
+/* Nav accent — a vivid electric blue-purple, intentionally off-token (the shell
+   mocks a product with its own brand, not petri chrome). Themed per mode so the
+   active nav item's accent-coloured text still clears WCAG AA (4.5:1) against
+   the nav surface in both dark and light. */
 .dashboard-shell {
-  --nav-accent: #9b7dff;
+  --nav-accent: #6f9bff;
 }
 
 :root[data-theme='light'] .dashboard-shell {
-  --nav-accent: #7c3aed;
+  --nav-accent: #3a54e8;
+}
+
+/* Active nav item + logo mark get a soft accent halo — reads as a faint glow.
+   `color-mix()` is Baseline 2023; where it's unsupported the shadow declaration
+   is simply dropped (no glow, everything else unaffected). */
+.dashboard-shell [aria-current='page'] {
+  text-shadow: 0 0 12px color-mix(in srgb, var(--nav-accent) 55%, transparent);
+}
+
+.dashboard-shell .logo-mark {
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--nav-accent) 45%, transparent));
 }

@@ -7,7 +7,13 @@ interface LogoProps {
 export function Logo({ name }: LogoProps) {
   return (
     <div className="flex items-center gap-2 px-2 py-1">
-      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        width="22"
+        height="22"
+        aria-hidden="true"
+        className="logo-mark"
+      >
         <path d="M12 2l4.6 9.2L12 8.7 7.4 11.2z" fill="var(--nav-accent)" />
         <path
           d="M3 15.4c3.2 0 4.3-1.9 7.5-1.9s4.3 1.9 7.5 1.9"

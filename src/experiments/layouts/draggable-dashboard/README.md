@@ -35,12 +35,18 @@ run collision/packing logic on it; here it is in-memory and overlap is allowed.
 
 The nav accent (`--nav-accent` in `styles.css`) is an intentional off-token
 colour — the shell mocks a product with its own brand, not petri chrome. It's a
-scoped CSS var on `.dashboard-shell`, themed per mode (`#9b7dff` dark / `#7c3aed`
+scoped CSS var on `.dashboard-shell`, themed per mode (`#6f9bff` dark / `#3a54e8`
 light) so the active nav item's accent-coloured text clears AA (≥4.5:1) on the
-nav surface in both themes. Production would promote it to a real design token.
+nav surface in both themes. The active item and logo mark also carry a soft
+accent `text-shadow` / `drop-shadow` halo (a faint glow). Production would
+promote the colour to a real design token.
 
 ## Browser note
 
 Drag uses pointer events + CSS transforms (`@dnd-kit`), broadly supported.
 `touch-action: none` is set on the drag handles so touch drags don't scroll the
 page — worth a check on iOS Safari when this experiment gets a mobile pass.
+
+The nav glow uses `color-mix()` (Baseline 2023 — current Chrome/Firefox/Safari).
+Older engines drop the `text-shadow` / `filter` declaration and simply show no
+glow; nothing else depends on it.
