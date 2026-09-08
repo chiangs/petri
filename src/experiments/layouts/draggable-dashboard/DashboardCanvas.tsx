@@ -87,8 +87,8 @@ export function DashboardCanvas({
         ref={canvasRef}
         role="group"
         aria-label={copy.canvasLabel}
-        className="relative overflow-hidden rounded-card border border-border bg-bg"
-        style={{ height: CANVAS_HEIGHT }}
+        className="relative h-full overflow-hidden bg-bg"
+        style={{ minHeight: CANVAS_HEIGHT }}
       >
         {gridOverlay}
         {widgetNodes}

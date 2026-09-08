@@ -16,7 +16,7 @@ export function DashboardShell({ sidebar, topBar, children }: DashboardShellProp
       {sidebar}
       <div className="flex min-w-0 flex-1 flex-col">
         {topBar}
-        <div className="min-w-0 flex-1 p-4">{children}</div>
+        <div className="min-w-0 flex-1">{children}</div>
       </div>
     </div>
   )
