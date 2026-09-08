@@ -25,20 +25,27 @@ either by asking to commit outright, or by answering that check-in.
    `git diff --staged` if anything's already staged) to see the real change, not just
    the file names.
 
-2. **Check the branch.** Per `CLAUDE.md`, experiment work belongs on `exp/<slug>` and
-   promotion work on `promote/<slug>` — never commit new experiment or promotion files
+2. **Check the branch.** Per `CLAUDE.md`, experiment work belongs on `exp/<slug>`,
+   promotion work on `promote/<slug>`, and work on the sandbox app itself on
+   `feat/<feature-name>` — never commit new experiment, promotion, or app-shell files
    while sitting on `main`. If `git branch --show-current` is `main` and the diff looks
-   like new/changed experiment or promotion work, stop and flag it before committing —
-   don't silently commit to `main`.
+   like any of those, stop and flag it before committing — don't silently commit to
+   `main`.
 
 3. **Pick the commit type:**
    - Changes confined to `src/experiments/**/<slug>/` on branch `exp/<slug>` →
      `exp(<slug>): <what changed>`.
    - Changes confined to `src/dev-ready/**` on branch `promote/<slug>` →
      `promote(<slug>): <what changed>`.
-   - Everything else (tooling, docs, config, root-level fixes, cross-cutting changes)
-     → standard **Conventional Commits** type: `feat`, `fix`, `docs`, `refactor`,
-     `style`, `perf`, `test`, `build`, `chore`, or `ci`, with an optional `(scope)`.
+   - App-shell work (see `CLAUDE.md` → App features) on branch `feat/<feature-name>` →
+     the fitting **Conventional Commits** type *per commit* (`feat`, `fix`, `docs`,
+     `refactor`…), scoped to the feature where it fits: `feat(<feature-name>): …`. Unlike
+     `exp()` / `promote()`, the branch does **not** force one type — a bug fix on a
+     `feat/` branch is still `fix(...)`.
+   - Everything else (tooling, docs, config, root-level fixes, cross-cutting changes not
+     tied to a `feat/` branch) → standard **Conventional Commits** type: `feat`, `fix`,
+     `docs`, `refactor`, `style`, `perf`, `test`, `build`, `chore`, or `ci`, with an
+     optional `(scope)`.
 
 4. **Write the message:**
    - Summary line: `type(scope): imperative, present-tense description` (e.g. "add nav
