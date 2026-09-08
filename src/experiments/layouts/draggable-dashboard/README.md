@@ -47,8 +47,8 @@ scoped CSS var on `.dashboard-shell`, themed per mode (`#6f9bff` dark / `#3a54e8
 light) so the active nav item's accent-coloured text clears AA (≥4.5:1) on the
 nav surface in both themes. The active nav item and logo mark carry a soft
 accent `text-shadow` / `drop-shadow` halo (a faint glow), and the top-bar
-search takes the accent on its border + icon (plus a soft ring) while focused
-or holding a query. Production would promote the colour to a real design token.
+search takes the accent on its border + icon (plus a soft ring) while focused.
+Production would promote the colour to a real design token.
 
 ## Browser note
 
