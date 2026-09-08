@@ -35,7 +35,7 @@ export function SwatchPicker({ colors, value, onChange }: SwatchPickerProps) {
           type="color"
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          className="size-8 cursor-pointer rounded-control border border-border bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+          className="size-8 cursor-pointer rounded-control border border-border bg-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
         />
       </label>
     </div>

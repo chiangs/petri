@@ -30,15 +30,15 @@ export function SelectionText({
   const paragraphStyle: CSSProperties = { fontSize: `${fontSize}px`, lineHeight };
 
   return (
-    <div className="selection-demo rounded-card border border-border bg-white p-8">
+    <div className="selection-demo rounded-card border border-border bg-surface p-8">
       <style>{selectionCss}</style>
-      <p className="mb-3 text-xs font-semibold tracking-wide text-neutral-500 uppercase">
+      <p className="mb-3 text-xs font-semibold tracking-wide text-muted uppercase">
         {copy.caption}
       </p>
-      <h2 className="mb-4 font-serif text-5xl font-semibold tracking-tight text-neutral-900">
+      <h2 className="mb-4 font-serif text-5xl font-semibold tracking-tight text-ink">
         {copy.heading}
       </h2>
-      <p className="max-w-prose text-neutral-900" style={paragraphStyle}>
+      <p className="max-w-prose text-ink" style={paragraphStyle}>
         {copy.paragraph}
       </p>
     </div>

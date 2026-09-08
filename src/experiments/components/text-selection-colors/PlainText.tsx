@@ -12,11 +12,11 @@ const copy = {
 
 export function PlainText() {
   return (
-    <div className="rounded-card border border-border bg-white p-8">
-      <p className="mb-3 text-xs font-semibold tracking-wide text-neutral-500 uppercase">
+    <div className="rounded-card border border-border bg-surface p-8">
+      <p className="mb-3 text-xs font-semibold tracking-wide text-muted uppercase">
         {copy.caption}
       </p>
-      <p className="max-w-prose text-lg text-neutral-900" style={{ lineHeight: 1.6 }}>
+      <p className="max-w-prose text-lg text-ink" style={{ lineHeight: 1.6 }}>
         {copy.paragraph}
       </p>
     </div>
