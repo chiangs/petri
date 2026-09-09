@@ -65,7 +65,9 @@ export function Sidebar({ experiments, activeSlug, onSelect }: SidebarProps) {
 
   return (
     <nav className="sidebar">
-      <div className="sidebar-title">Petri</div>
+      <div className="sidebar-title">
+        <span className="sidebar-wordmark">Petri</span> by Stephen Chiang
+      </div>
       <div className="sidebar-theme">
         <ThemeToggle />
       </div>

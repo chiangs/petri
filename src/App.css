@@ -10,21 +10,44 @@
   min-height: 100svh;
 }
 
+/* The sidenav carries chiang.ink branding — Petri deploys to a subdomain of the
+   personal site. Warm charcoal surfaces + the single copper accent, overriding
+   the raw tokens for this subtree only, so the hand-written rules below AND the
+   Tailwind-styled SearchInput / ThemeToggle inherit it. Values from
+   chiang-ink/.claude/DESIGN.md (Color Tokens). chiang.ink is dark-only and the
+   nav stays dark in both themes — the light/dark toggle only affects the content
+   panel. --text is nudged lighter than chiang's #737371 for WCAG AA contrast. */
 .sidebar {
+  --bg: #1a1a1a;
+  --code-bg: #202020;
+  --text-h: #e5e2e1;
+  --text: #928f8b;
+  --border: #2a2724;
+  --accent: #ffb77d;
+  --accent-bg: rgba(255, 183, 125, 0.12);
+  --accent-border: rgba(255, 183, 125, 0.4);
+  color-scheme: dark;
+
   width: 240px;
   flex-shrink: 0;
-  border-right: 1px solid var(--border);
+  background: var(--bg);
   padding: 24px 16px;
   display: flex;
   flex-direction: column;
 }
 
 .sidebar-title {
-  font-family: var(--mono);
-  font-weight: 600;
-  color: var(--text-h);
+  font-family: var(--sans);
+  font-weight: 400;
+  color: var(--text);
   margin-bottom: 20px;
-  font-size: 15px;
+  font-size: 12px;
+}
+
+.sidebar-wordmark {
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--accent);
 }
 
 .sidebar-groups {
