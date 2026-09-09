@@ -16,7 +16,7 @@ Within each category, items are ordered `S` → `M` → `L`.
 
 ## App
 
-- **`L` — Rework the code preview to show real implementation code.** The viewer only shows `Component.tsx`, so experiments split into many sub-component files (per `docs/DESIGN.md`) preview as just the top-level composition — not the code a developer needs to re-implement the piece. Surface the actual implementation instead: flatten/inline the sub-components, show every file in the experiment folder, or similar. Approach undecided — "show all files" would be `M`, an import-inlining transform `L`; touches `src/lib/registry.ts` (globs only `Component.tsx` for source today) and the viewer (`ExperimentViewer.tsx` / `CodeBlock.tsx`).
+_(none yet)_
 
 ## Experiments
 

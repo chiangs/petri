@@ -13,12 +13,18 @@ export interface ExperimentMeta {
   promoted?: boolean
 }
 
+/** One source file from an experiment folder, shown in the viewer's Code tab. */
+export interface ExperimentFile {
+  /** Path relative to the experiment folder, e.g. `Component.tsx` or `heroes/cat/CatHero.tsx`. */
+  path: string
+  code: string
+}
+
 export interface Experiment extends ExperimentMeta {
   slug: string
   /** Which section of the gallery it belongs to, derived from the folder. */
   category: 'component' | 'layout'
   Component: ComponentType
-  source: string
-  /** Raw contents of the experiment's `styles.css`, if it has one. */
-  css?: string
+  /** Every `.tsx`/`.ts`/`.css` in the folder except `meta.ts` and `controls/`. */
+  files: ExperimentFile[]
 }
