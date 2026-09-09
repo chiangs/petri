@@ -13,7 +13,9 @@ corner-resize. Widgets are being filled in one at a time — Widget A is the
 one-big-metric tile (`MetricWidget`: an oversized mint→periwinkle gradient
 number over a caption); Widget B is a decorative node constellation
 (`NodeGraphWidget` / `GraphNode`: a static hand-placed SVG, no data behind it,
-hidden from assistive tech); C–E are still labelled placeholder cards.
+hidden from assistive tech); Widget C is a ranked horizontal-bar list
+(`BarListWidget` / `BarListRow`: themeable track, off-token gradient fill, each
+value also shown as text); D–E are still labelled placeholder cards.
 `WidgetContent` maps a widget id to its body. Still to come: the remaining
 widgets (table, activity feed, charts), overlap handling, and layout
 persistence.

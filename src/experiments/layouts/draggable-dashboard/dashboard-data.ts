@@ -15,8 +15,8 @@ export interface WidgetDef {
 export const PLACEHOLDER_WIDGETS: WidgetDef[] = [
   { id: 'a', title: 'Net revenue retention', x: 24, y: 24, w: 240, h: 168 },
   { id: 'b', title: 'Network', x: 288, y: 24, w: 264, h: 264 },
-  { id: 'c', title: 'Widget C', x: 24, y: 216, w: 240, h: 120 },
-  { id: 'd', title: 'Widget D', x: 24, y: 360, w: 240, h: 120 },
+  { id: 'c', title: 'Top channels', x: 24, y: 216, w: 240, h: 168 },
+  { id: 'd', title: 'Widget D', x: 24, y: 408, w: 240, h: 120 },
   { id: 'e', title: 'Widget E', x: 288, y: 312, w: 264, h: 120 },
 ]
 
@@ -27,6 +27,15 @@ export const RETENTION_METRIC = {
   caption: 'net revenue retention',
 } as const
 
+// Widget C's ranked bar list (see BarListWidget). Static prototype figures;
+// `value` is a share in percent, bars scale to the largest.
+export const CHANNEL_SHARE: { label: string; value: number }[] = [
+  { label: 'Organic search', value: 42 },
+  { label: 'Direct', value: 28 },
+  { label: 'Referral', value: 19 },
+  { label: 'Social', value: 11 },
+]
+
 export const GRID_SIZE_DEFAULT = 24
 export const GRID_SIZE_MIN = 8
 export const GRID_SIZE_MAX = 48
@@ -36,7 +45,7 @@ export const GRID_SIZE_STEP = 4
 export const MIN_W = GRID_SIZE_DEFAULT * 4
 export const MIN_H = GRID_SIZE_DEFAULT * 4
 
-export const CANVAS_HEIGHT = 504
+export const CANVAS_HEIGHT = 552
 
 // ── App shell (nav + top bar) ────────────────────────────────────────────────
 

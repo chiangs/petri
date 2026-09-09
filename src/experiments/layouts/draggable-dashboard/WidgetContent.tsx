@@ -1,3 +1,4 @@
+import { BarListWidget } from './BarListWidget'
 import { MetricWidget } from './MetricWidget'
 import { NodeGraphWidget } from './NodeGraphWidget'
 import { RETENTION_METRIC } from './dashboard-data'
@@ -12,6 +13,9 @@ export function WidgetContent({ id }: { id: string }) {
   }
   if (id === 'b') {
     return <NodeGraphWidget />
+  }
+  if (id === 'c') {
+    return <BarListWidget />
   }
   return null
 }
