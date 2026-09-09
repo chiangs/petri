@@ -8,11 +8,11 @@ interface Stream {
 }
 
 const STREAMS: Stream[] = [
-  { label: 'API', values: [4, 5, 6, 5, 7, 8, 7, 9, 8] },
-  { label: 'Web', values: [8, 7, 9, 11, 10, 12, 13, 12, 14] },
-  { label: 'Mobile', values: [3, 4, 4, 6, 7, 6, 8, 9, 11] },
-  { label: 'Batch', values: [6, 6, 5, 4, 5, 4, 3, 4, 3] },
-  { label: 'Partner', values: [2, 3, 3, 4, 3, 5, 6, 5, 7] },
+  { label: 'API', values: [4, 9, 3, 8, 2, 11, 4, 12, 5, 9, 3, 10, 6] },
+  { label: 'Web', values: [9, 5, 14, 6, 16, 7, 12, 4, 15, 6, 11, 8, 14] },
+  { label: 'Mobile', values: [3, 8, 2, 10, 4, 13, 3, 9, 14, 5, 11, 4, 12] },
+  { label: 'Batch', values: [8, 3, 7, 2, 9, 3, 6, 10, 2, 8, 3, 7, 2] },
+  { label: 'Partner', values: [2, 7, 3, 8, 2, 6, 9, 3, 7, 2, 8, 4, 9] },
 ]
 
 // Off-token mint→periwinkle ramp, tying the graph to MetricWidget's gradient.
