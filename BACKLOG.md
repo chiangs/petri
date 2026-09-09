@@ -24,11 +24,6 @@ Within each category, items are ordered `S` → `M` → `L`.
   Open question: a default view shown when no experiment is selected, or a dismissable
   popup/modal? Decide before building.
 
-- **`M` — Animate the light/dark theme toggle.** The theme switch is currently an
-  instant swap. Transition the colour change (CSS transitions on the themed vars, or
-  the View Transitions API). Watch for first-paint flash and transitions firing on
-  page load.
-
 ## Experiments
 
 _(none yet)_
