@@ -11,9 +11,12 @@ both **optionally** snapping to a grid (drag and drop, resize step). Built with
 with logo, top bar with user avatar) around the drag/snap canvas, plus
 corner-resize. Widgets are being filled in one at a time — Widget A is the
 one-big-metric tile (`MetricWidget`: an oversized mint→periwinkle gradient
-number over a caption); B–E are still labelled placeholder cards. `WidgetContent`
-maps a widget id to its body. Still to come: the remaining widgets (table,
-activity feed, charts), overlap handling, and layout persistence.
+number over a caption); Widget B is a decorative node constellation
+(`NodeGraphWidget` / `GraphNode`: a static hand-placed SVG, no data behind it,
+hidden from assistive tech); C–E are still labelled placeholder cards.
+`WidgetContent` maps a widget id to its body. Still to come: the remaining
+widgets (table, activity feed, charts), overlap handling, and layout
+persistence.
 
 The shell (`DashboardShell`, `NavSidebar`, `TopBar`, …) is the piece; the nav
 selection is visual only (highlight + top-bar title follow the click, the canvas

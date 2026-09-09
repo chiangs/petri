@@ -1,4 +1,5 @@
 import { MetricWidget } from './MetricWidget'
+import { NodeGraphWidget } from './NodeGraphWidget'
 import { RETENTION_METRIC } from './dashboard-data'
 
 // Maps a widget id to its rendered body. Widgets are built one at a time; ids
@@ -8,6 +9,9 @@ export function WidgetContent({ id }: { id: string }) {
     return (
       <MetricWidget value={RETENTION_METRIC.value} caption={RETENTION_METRIC.caption} />
     )
+  }
+  if (id === 'b') {
+    return <NodeGraphWidget />
   }
   return null
 }
