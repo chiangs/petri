@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import type { Experiment } from '@/lib/types'
 import { searchExperiments } from '@/lib/experiment-search'
+import { useReturnUrl } from '@/lib/use-return-url'
 import { SearchInput } from './SearchInput'
 import { ThemeToggle } from './ThemeToggle'
 
 const copy = {
   searchLabel: 'Search experiments',
   noMatches: (query: string) => `No experiments match “${query}”`,
+  backToSite: 'Back to chiang.ink',
 } as const
 
 interface SidebarProps {
@@ -22,6 +24,7 @@ const groups: { category: Experiment['category']; label: string }[] = [
 
 export function Sidebar({ experiments, activeSlug, onSelect }: SidebarProps) {
   const [query, setQuery] = useState('')
+  const returnUrl = useReturnUrl()
 
   const visible = searchExperiments(experiments, query)
   const noMatches = query.trim().length > 0 && visible.length === 0
@@ -80,6 +83,9 @@ export function Sidebar({ experiments, activeSlug, onSelect }: SidebarProps) {
         />
       </div>
       {list}
+      <a className="sidebar-back" href={returnUrl}>
+        <span aria-hidden="true">←</span> {copy.backToSite}
+      </a>
     </nav>
   )
 }
