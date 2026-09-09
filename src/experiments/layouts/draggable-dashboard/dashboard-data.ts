@@ -16,7 +16,7 @@ export const PLACEHOLDER_WIDGETS: WidgetDef[] = [
   { id: 'a', title: 'Net revenue retention', x: 24, y: 24, w: 240, h: 168 },
   { id: 'b', title: 'Network', x: 288, y: 24, w: 264, h: 264 },
   { id: 'c', title: 'Top channels', x: 24, y: 216, w: 240, h: 168 },
-  { id: 'd', title: 'Widget D', x: 24, y: 408, w: 240, h: 120 },
+  { id: 'd', title: 'Throughput mix', x: 24, y: 408, w: 240, h: 168 },
   { id: 'e', title: 'Widget E', x: 288, y: 312, w: 264, h: 120 },
 ]
 
@@ -45,7 +45,7 @@ export const GRID_SIZE_STEP = 4
 export const MIN_W = GRID_SIZE_DEFAULT * 4
 export const MIN_H = GRID_SIZE_DEFAULT * 4
 
-export const CANVAS_HEIGHT = 552
+export const CANVAS_HEIGHT = 600
 
 // ── App shell (nav + top bar) ────────────────────────────────────────────────
 

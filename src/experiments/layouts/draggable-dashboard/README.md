@@ -15,9 +15,11 @@ number over a caption); Widget B is a decorative node constellation
 (`NodeGraphWidget` / `GraphNode`: a static hand-placed SVG, no data behind it,
 hidden from assistive tech); Widget C is a ranked horizontal-bar list
 (`BarListWidget` / `BarListRow`: themeable track, off-token gradient fill, each
-value also shown as text); D–E are still labelled placeholder cards.
-`WidgetContent` maps a widget id to its body. Still to come: the remaining
-widgets (table, activity feed, charts), overlap handling, and layout
+value also shown as text); Widget D is a decorative streamgraph
+(`StreamGraphWidget` + `stream-graph.ts`: five made-up sub-metrics stacked
+around a centred baseline, geometry precomputed, hidden from assistive tech);
+Widget E is still a labelled placeholder card. `WidgetContent` maps a widget id
+to its body. Still to come: the last widget, overlap handling, and layout
 persistence.
 
 The shell (`DashboardShell`, `NavSidebar`, `TopBar`, …) is the piece; the nav
