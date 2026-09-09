@@ -33,6 +33,8 @@ Repo-specific workflows, run as slash commands (see `.claude/skills/`):
   viewer, tokens, build config, docs, skills), builds against `docs/DESIGN.md`.
 - **promote** — moves an approved experiment's piece to `src/dev-ready/` on a `promote/<slug>`
   branch.
+- **backlog** — records an idea in `BACKLOG.md` under App / Experiments with an S/M/L complexity
+  estimate; doesn't branch or build.
 - **accessibility-review** — checks an experiment's semantic HTML and WCAG A/AA against
   `docs/DESIGN.md`, reports findings only.
 - **commit** — writes Conventional Commit messages and shows them for approval before committing.
