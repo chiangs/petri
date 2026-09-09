@@ -16,13 +16,7 @@ Within each category, items are ordered `S` → `M` → `L`.
 
 ## App
 
-- **`S` — Back-to-main-site button.** Petri deploys to a subdomain; a button (in the
-  sidebar) takes the user back to the parent site. Target URL should be configurable
-  (env var / constant), not hardcoded.
-
-- **`M` — About / intro to Petri.** Explain what Petri is to a first-time reader.
-  Open question: a default view shown when no experiment is selected, or a dismissable
-  popup/modal? Decide before building.
+_(none yet)_
 
 ## Experiments
 
