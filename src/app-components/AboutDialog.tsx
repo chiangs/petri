@@ -53,7 +53,10 @@ export function AboutDialog({ open, onClose }: AboutDialogProps) {
       onClose={handleClose}
       onClick={handleClick}
     >
-      <h2 id={headingId}>{copy.heading}</h2>
+      <h2 id={headingId}>
+        {copy.heading}
+        <img src="/favicon.svg" alt="" className="about-dialog-mark" />
+      </h2>
       {paragraphs}
       <p>
         {copy.outro.before}

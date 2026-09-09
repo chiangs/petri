@@ -290,6 +290,14 @@
 
 .about-dialog h2 {
   margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.about-dialog-mark {
+  width: 1.1em;
+  height: 1.1em;
 }
 
 .about-dialog p {
