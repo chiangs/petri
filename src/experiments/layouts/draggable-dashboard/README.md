@@ -7,11 +7,13 @@ both **optionally** snapping to a grid (drag and drop, resize step). Built with
 `restrictToParentElement`); resize is a plain pointer-capture handle
 (`ResizeHandle`) driving the same `{x,y,w,h}` layout model.
 
-**Steps 1–2 of a multi-step build.** So far: the enterprise-app shell (nav rail
+**Steps 1–3 of a multi-step build.** So far: the enterprise-app shell (nav rail
 with logo, top bar with user avatar) around the drag/snap canvas, plus
-corner-resize, still holding labelled placeholder cards. Still to come: real
-data-heavy widgets (KPI tiles, table, activity feed), chart widgets, overlap
-handling, and layout persistence.
+corner-resize. Widgets are being filled in one at a time — Widget A is the
+one-big-metric tile (`MetricWidget`: an oversized mint→periwinkle gradient
+number over a caption); B–E are still labelled placeholder cards. `WidgetContent`
+maps a widget id to its body. Still to come: the remaining widgets (table,
+activity feed, charts), overlap handling, and layout persistence.
 
 The shell (`DashboardShell`, `NavSidebar`, `TopBar`, …) is the piece; the nav
 selection is visual only (highlight + top-bar title follow the click, the canvas
@@ -50,6 +52,11 @@ The shell targets the gallery's standard width. It isn't responsive yet — the
 canvas has fixed pixel dimensions and the centered top-bar search crowds the
 title / user cluster below roughly 1000px. A mobile/reflow pass is a later step.
 
+Widget bodies (starting with `MetricWidget`) use hardcoded hex colours rather
+than design tokens — deliberate, the widgets mock a product's own data-viz
+palette and aren't bound to petri's tokens. Production would promote the widget
+palette to its own token set.
+
 The nav accent (`--nav-accent` in `styles.css`) is an intentional off-token
 colour — the shell mocks a product with its own brand, not petri chrome. It's a
 scoped CSS var on `.dashboard-shell`, themed per mode (`#6f9bff` dark / `#3a54e8`
@@ -60,6 +67,13 @@ border + soft ring appears on the focused search, and on hover of the avatar
 and the nav links. Production would promote the colour to a real design token.
 
 ## Browser note
+
+Widget A's gradient number uses `background-clip: text` with transparent text
+fill (Tailwind's `bg-clip-text` emits both `-webkit-` and unprefixed forms).
+Baseline across current Chrome / Firefox / Safari; on an engine that lacks it
+the number renders transparent (invisible) rather than falling back to a solid
+colour. Acceptable for a prototype — production would add a solid-colour
+fallback via `@supports`.
 
 Drag uses pointer events + CSS transforms (`@dnd-kit`), broadly supported.
 `touch-action: none` is set on the drag handles so touch drags don't scroll the

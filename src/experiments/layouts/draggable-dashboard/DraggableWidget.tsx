@@ -4,6 +4,7 @@ import { CSS } from '@dnd-kit/utilities'
 import { cn } from '@/lib/cn'
 import { ResizeHandle } from './ResizeHandle'
 import { WidgetCard } from './WidgetCard'
+import { WidgetContent } from './WidgetContent'
 import type { WidgetPos } from './layout'
 
 interface DraggableWidgetProps {
@@ -62,7 +63,9 @@ export function DraggableWidget({
         handleProps={
           { ...listeners, ...attributes } as ButtonHTMLAttributes<HTMLButtonElement>
         }
-      />
+      >
+        <WidgetContent id={id} />
+      </WidgetCard>
       <ResizeHandle
         title={title}
         width={pos.w}

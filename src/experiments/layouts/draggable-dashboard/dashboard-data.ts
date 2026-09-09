@@ -13,12 +13,19 @@ export interface WidgetDef {
 }
 
 export const PLACEHOLDER_WIDGETS: WidgetDef[] = [
-  { id: 'a', title: 'Widget A', x: 24, y: 24, w: 216, h: 120 },
-  { id: 'b', title: 'Widget B', x: 264, y: 24, w: 168, h: 120 },
-  { id: 'c', title: 'Widget C', x: 24, y: 168, w: 216, h: 120 },
-  { id: 'd', title: 'Widget D', x: 264, y: 168, w: 168, h: 120 },
-  { id: 'e', title: 'Widget E', x: 24, y: 312, w: 408, h: 120 },
+  { id: 'a', title: 'Net revenue retention', x: 24, y: 24, w: 240, h: 168 },
+  { id: 'b', title: 'Widget B', x: 288, y: 24, w: 168, h: 168 },
+  { id: 'c', title: 'Widget C', x: 24, y: 216, w: 216, h: 120 },
+  { id: 'd', title: 'Widget D', x: 264, y: 216, w: 192, h: 120 },
+  { id: 'e', title: 'Widget E', x: 24, y: 360, w: 432, h: 120 },
 ]
+
+// Widget A renders this as one big gradient number (see MetricWidget). It's a
+// static prototype value — no dataset behind it.
+export const RETENTION_METRIC = {
+  value: '114%',
+  caption: 'net revenue retention',
+} as const
 
 export const GRID_SIZE_DEFAULT = 24
 export const GRID_SIZE_MIN = 8
@@ -29,7 +36,7 @@ export const GRID_SIZE_STEP = 4
 export const MIN_W = GRID_SIZE_DEFAULT * 4
 export const MIN_H = GRID_SIZE_DEFAULT * 4
 
-export const CANVAS_HEIGHT = 460
+export const CANVAS_HEIGHT = 508
 
 // ── App shell (nav + top bar) ────────────────────────────────────────────────
 
