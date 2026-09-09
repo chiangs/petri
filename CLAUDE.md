@@ -116,7 +116,7 @@ use, not the library they build.
 ## Skills
 
 Repo-specific workflows live as slash-command skills in `.claude/skills/` (`commit`,
-`new-experiment`, `new-feature`, `promote`, `accessibility-review`, …) — each folder's `SKILL.md`
+`new-experiment`, `new-feature`, `promote`, `accessibility-review`, `backlog`, …) — each folder's `SKILL.md`
 documents when it triggers. **Whenever a new skill folder is added, also add a one-line summary of it to
 `README.md`'s skills section** so designers can see what's available without opening
 `.claude/skills/`.
