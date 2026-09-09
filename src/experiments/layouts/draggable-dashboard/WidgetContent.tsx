@@ -1,3 +1,4 @@
+import { ActivityFeedWidget } from './ActivityFeedWidget'
 import { BarListWidget } from './BarListWidget'
 import { MetricWidget } from './MetricWidget'
 import { NodeGraphWidget } from './NodeGraphWidget'
@@ -20,6 +21,9 @@ export function WidgetContent({ id }: { id: string }) {
   }
   if (id === 'd') {
     return <StreamGraphWidget />
+  }
+  if (id === 'e') {
+    return <ActivityFeedWidget />
   }
   return null
 }

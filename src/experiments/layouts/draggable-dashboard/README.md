@@ -7,20 +7,26 @@ both **optionally** snapping to a grid (drag and drop, resize step). Built with
 `restrictToParentElement`); resize is a plain pointer-capture handle
 (`ResizeHandle`) driving the same `{x,y,w,h}` layout model.
 
-**Steps 1–3 of a multi-step build.** So far: the enterprise-app shell (nav rail
+**Steps 1–4 of a multi-step build.** So far: the enterprise-app shell (nav rail
 with logo, top bar with user avatar) around the drag/snap canvas, plus
-corner-resize. Widgets are being filled in one at a time — Widget A is the
-one-big-metric tile (`MetricWidget`: an oversized mint→periwinkle gradient
-number over a caption); Widget B is a decorative node constellation
-(`NodeGraphWidget` / `GraphNode`: a static hand-placed SVG, no data behind it,
-hidden from assistive tech); Widget C is a ranked horizontal-bar list
-(`BarListWidget` / `BarListRow`: themeable track, off-token gradient fill, each
-value also shown as text); Widget D is a decorative streamgraph
-(`StreamGraphWidget` + `stream-graph.ts`: five made-up sub-metrics stacked
-around a centred baseline, geometry precomputed, hidden from assistive tech);
-Widget E is still a labelled placeholder card. `WidgetContent` maps a widget id
-to its body. Still to come: the last widget, overlap handling, and layout
-persistence.
+corner-resize, and all five widget bodies (`WidgetContent` maps a widget id to
+its body):
+
+- **A — `MetricWidget`.** One-big-metric tile: an oversized mint→periwinkle
+  gradient number over a caption.
+- **B — `NodeGraphWidget` / `GraphNode`.** A decorative node constellation —
+  static hand-placed SVG, no data behind it, hidden from assistive tech.
+- **C — `BarListWidget` / `BarListRow`.** A ranked horizontal-bar list —
+  themeable track, off-token gradient fill, each value also shown as text.
+- **D — `StreamGraphWidget` + `stream-graph.ts`.** A decorative streamgraph —
+  five made-up sub-metrics stacked around a centred baseline, geometry
+  precomputed, hidden from assistive tech.
+- **E — `ActivityFeedWidget` / `ActivityItem`.** A short feed of mock events —
+  real text (ink/muted tokens for AA contrast), an `aria-hidden` off-token
+  status dot per row.
+
+The widget figures are all static mock values — no datasets, no fetching. Still
+to come: overlap handling and layout persistence.
 
 The shell (`DashboardShell`, `NavSidebar`, `TopBar`, …) is the piece; the nav
 selection is visual only (highlight + top-bar title follow the click, the canvas

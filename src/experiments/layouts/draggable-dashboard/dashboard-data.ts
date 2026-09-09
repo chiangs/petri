@@ -17,7 +17,7 @@ export const PLACEHOLDER_WIDGETS: WidgetDef[] = [
   { id: 'b', title: 'Network', x: 288, y: 24, w: 264, h: 264 },
   { id: 'c', title: 'Top channels', x: 24, y: 216, w: 240, h: 168 },
   { id: 'd', title: 'Throughput mix', x: 24, y: 408, w: 240, h: 168 },
-  { id: 'e', title: 'Widget E', x: 288, y: 312, w: 264, h: 120 },
+  { id: 'e', title: 'Recent activity', x: 288, y: 312, w: 264, h: 240 },
 ]
 
 // Widget A renders this as one big gradient number (see MetricWidget). It's a
@@ -34,6 +34,22 @@ export const CHANNEL_SHARE: { label: string; value: number }[] = [
   { label: 'Direct', value: 28 },
   { label: 'Referral', value: 19 },
   { label: 'Social', value: 11 },
+]
+
+// Widget E's activity feed (see ActivityFeedWidget). Mock events; the status
+// drives a decorative dot colour — the event text already carries the meaning.
+export type ActivityStatus = 'ok' | 'warn' | 'info'
+
+export const RECENT_ACTIVITY: {
+  text: string
+  time: string
+  status: ActivityStatus
+}[] = [
+  { text: 'Invoice #4021 paid', time: '2m', status: 'ok' },
+  { text: 'API latency spike resolved', time: '18m', status: 'warn' },
+  { text: 'Workspace “Atlas” created', time: '1h', status: 'info' },
+  { text: 'Nightly export completed', time: '3h', status: 'ok' },
+  { text: 'Seat limit reached on Growth plan', time: '5h', status: 'warn' },
 ]
 
 export const GRID_SIZE_DEFAULT = 24
