@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { Experiment } from '@/lib/types'
 import { searchExperiments } from '@/lib/experiment-search'
 import { useReturnUrl } from '@/lib/use-return-url'
+import { AboutButton } from './AboutButton'
 import { SearchInput } from './SearchInput'
 import { ThemeToggle } from './ThemeToggle'
 
@@ -15,6 +16,7 @@ interface SidebarProps {
   experiments: Experiment[]
   activeSlug: string | null
   onSelect: (slug: string) => void
+  onShowAbout: () => void
 }
 
 const groups: { category: Experiment['category']; label: string }[] = [
@@ -22,7 +24,12 @@ const groups: { category: Experiment['category']; label: string }[] = [
   { category: 'layout', label: 'Layouts' },
 ]
 
-export function Sidebar({ experiments, activeSlug, onSelect }: SidebarProps) {
+export function Sidebar({
+  experiments,
+  activeSlug,
+  onSelect,
+  onShowAbout,
+}: SidebarProps) {
   const [query, setQuery] = useState('')
   const returnUrl = useReturnUrl()
 
@@ -69,7 +76,11 @@ export function Sidebar({ experiments, activeSlug, onSelect }: SidebarProps) {
   return (
     <nav className="sidebar">
       <div className="sidebar-title">
-        <span className="sidebar-wordmark">Petri</span> by Stephen Chiang
+        <span className="sidebar-title-row">
+          <span className="sidebar-wordmark">Petri</span>
+          <AboutButton onClick={onShowAbout} />
+        </span>
+        <span className="sidebar-byline">by Stephen Chiang</span>
       </div>
       <div className="sidebar-theme">
         <ThemeToggle />
