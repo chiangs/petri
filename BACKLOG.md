@@ -16,9 +16,7 @@ Within each category, items are ordered `S` → `M` → `L`.
 
 ## App
 
-- **`M` — About / intro to Petri.** Explain what Petri is to a first-time reader.
-  Open question: a default view shown when no experiment is selected, or a dismissable
-  popup/modal? Decide before building.
+_(none yet)_
 
 ## Experiments
 
