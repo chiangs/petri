@@ -1,0 +1,60 @@
+/* Nav accent — a vivid electric blue-purple, intentionally off-token (the shell
+   mocks a product with its own brand, not petri chrome). Themed per mode so the
+   active nav item's accent-coloured text still clears WCAG AA (4.5:1) against
+   the nav surface in both dark and light. */
+.dashboard-shell {
+  --nav-accent: #6f9bff;
+}
+
+:root[data-theme='light'] .dashboard-shell {
+  --nav-accent: #3a54e8;
+}
+
+/* Active nav item + logo mark get a soft accent halo — reads as a faint glow.
+   `color-mix()` is Baseline 2023; where it's unsupported the shadow declaration
+   is simply dropped (no glow, everything else unaffected). */
+.dashboard-shell [aria-current='page'] {
+  text-shadow: 0 0 12px color-mix(in srgb, var(--nav-accent) 55%, transparent);
+}
+
+.dashboard-shell .logo-mark {
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--nav-accent) 45%, transparent));
+}
+
+/* Accent border + ring — shared by the focused search, hovered avatar, and
+   hovered nav links. The search's transitions ride its Tailwind
+   `transition-[…]` utility; the avatar and nav links carry a transparent
+   border + their own transition below so the ring animates in. */
+.dashboard-shell .topbar-search--active,
+.dashboard-shell .avatar:hover,
+.dashboard-shell .nav-item:hover {
+  border-color: var(--nav-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nav-accent) 20%, transparent);
+}
+
+.dashboard-shell .topbar-search--active .topbar-search__icon {
+  color: var(--nav-accent);
+}
+
+.dashboard-shell .avatar,
+.dashboard-shell .nav-item {
+  border: 1px solid transparent;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+/* Oversized ghost page title (`text-[5rem]`, bleeds past the bar into the
+   canvas). A barely-there outline: 3px `-webkit-text-stroke` in the subtle
+   `--color-border`, letter interiors left at `--bg`. Deliberately far below AA
+   text contrast — it's a watermark, not a heading you read; see README
+   Accessibility note. (`-webkit-text-stroke` doubles thin letter parts and
+   Chromium ignores `paint-order` to collapse it — at this near-invisible
+   contrast it doesn't register.) */
+.dashboard-shell .topbar-title {
+  color: color-mix(in srgb, var(--color-border) 1%, var(--bg));
+  -webkit-text-stroke: 3px var(--color-border);
+  paint-order: stroke;
+}
