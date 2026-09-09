@@ -7,15 +7,20 @@ interface ExperimentViewerProps {
 }
 
 type Tab = 'preview' | 'code'
-type SourceLang = 'tsx' | 'css'
 
 const copy = {
   preview: 'Preview',
   code: 'Code',
-  jsx: 'JSX',
-  css: 'CSS',
-  sourceGroupLabel: 'Choose source language',
+  fileGroupLabel: 'Choose file',
 } as const
+
+// Dropdown <optgroup>s, in display order. `.tsx` files land in "Components",
+// `.ts` in "Helpers", `.css` in "Styles".
+const fileGroups = [
+  { label: 'Components', match: (path: string) => path.endsWith('.tsx') },
+  { label: 'Helpers', match: (path: string) => path.endsWith('.ts') },
+  { label: 'Styles', match: (path: string) => path.endsWith('.css') },
+] as const
 
 const categoryLabel: Record<Experiment['category'], string> = {
   component: 'Component',
@@ -24,13 +29,13 @@ const categoryLabel: Record<Experiment['category'], string> = {
 
 export function ExperimentViewer({ experiment }: ExperimentViewerProps) {
   const [tab, setTab] = useState<Tab>('preview')
-  const [sourceLang, setSourceLang] = useState<SourceLang>('tsx')
+  const [filePath, setFilePath] = useState<string | null>(null)
   const { Component } = experiment
 
-  const hasCss = typeof experiment.css === 'string'
-  const showCss = hasCss && sourceLang === 'css'
-  const codeSource = showCss ? experiment.css! : experiment.source
-  const codeLang = showCss ? 'css' : 'tsx'
+  const files = experiment.files
+  // `?? files[0]` covers switching to an experiment that lacks the last-picked path.
+  const selected = files.find((file) => file.path === filePath) ?? files[0]
+  const codeLang = selected.path.endsWith('.css') ? 'css' : 'tsx'
 
   const categoryTag = (
     <li className="tag tag--category">{categoryLabel[experiment.category]}</li>
@@ -51,40 +56,41 @@ export function ExperimentViewer({ experiment }: ExperimentViewerProps) {
     <p>{experiment.description}</p>
   ) : null
 
-  const langToggle =
-    tab === 'code' && hasCss ? (
-      <div
-        className="lang-toggle"
-        role="group"
-        aria-label={copy.sourceGroupLabel}
-      >
-        <button
-          type="button"
-          className={
-            sourceLang === 'tsx' ? 'lang-option lang-option--active' : 'lang-option'
-          }
-          aria-pressed={sourceLang === 'tsx'}
-          onClick={() => setSourceLang('tsx')}
+  const groupedOptions = fileGroups
+    .map((group) => ({
+      label: group.label,
+      files: files.filter((file) => group.match(file.path)),
+    }))
+    .filter((group) => group.files.length > 0)
+    .map((group) => (
+      <optgroup key={group.label} label={group.label}>
+        {group.files.map((file) => (
+          <option key={file.path} value={file.path}>
+            {file.path}
+          </option>
+        ))}
+      </optgroup>
+    ))
+
+  const fileSelect =
+    tab === 'code' && files.length > 1 ? (
+      <div className="file-select">
+        <select
+          aria-label={copy.fileGroupLabel}
+          value={selected.path}
+          onChange={(event) => setFilePath(event.target.value)}
         >
-          {copy.jsx}
-        </button>
-        <button
-          type="button"
-          className={
-            sourceLang === 'css' ? 'lang-option lang-option--active' : 'lang-option'
-          }
-          aria-pressed={sourceLang === 'css'}
-          onClick={() => setSourceLang('css')}
-        >
-          {copy.css}
-        </button>
+          {groupedOptions}
+        </select>
       </div>
     ) : null
 
   // Keep the preview mounted while the Code tab is showing so each experiment's
   // control state survives tab toggles — just hide it.
   const codePanel =
-    tab === 'code' ? <CodeBlock code={codeSource} lang={codeLang} /> : null
+    tab === 'code' ? (
+      <CodeBlock code={selected.code} lang={codeLang} />
+    ) : null
   const panel = (
     <>
       <div className="preview-stage" hidden={tab !== 'preview'}>
@@ -117,7 +123,7 @@ export function ExperimentViewer({ experiment }: ExperimentViewerProps) {
         </button>
       </div>
 
-      {langToggle}
+      {fileSelect}
       <div className="viewer-panel">{panel}</div>
     </div>
   )

@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react'
-import type { Experiment, ExperimentMeta } from './types'
+import type { Experiment, ExperimentFile, ExperimentMeta } from './types'
 
 // Convention: src/experiments/<category>/<slug>/Component.tsx + meta.ts
 // `_template/` sits one level up, so the category globs never match it.
@@ -12,18 +12,13 @@ const layoutModules = import.meta.glob<{ default: ComponentType }>(
   { eager: true },
 )
 
-const componentSources = import.meta.glob<string>(
-  '/src/experiments/components/*/Component.tsx',
-  { eager: true, query: '?raw', import: 'default' },
-)
-const layoutSources = import.meta.glob<string>(
-  '/src/experiments/layouts/*/Component.tsx',
-  { eager: true, query: '?raw', import: 'default' },
-)
-
-// Optional per-experiment stylesheet — powers the JSX/CSS toggle in the viewer.
-const styleSources = import.meta.glob<string>(
-  '/src/experiments/*/*/styles.css',
+// Every source file in every experiment folder — powers the viewer's Code tab.
+// `meta.ts` and `controls/` are filtered out in `filesFor`.
+const rawFiles = import.meta.glob<string>(
+  [
+    '/src/experiments/components/**/*.{tsx,ts,css}',
+    '/src/experiments/layouts/**/*.{tsx,ts,css}',
+  ],
   { eager: true, query: '?raw', import: 'default' },
 )
 
@@ -38,10 +33,21 @@ function parsePath(path: string): { category: Experiment['category']; slug: stri
   return { category: match[1] === 'layouts' ? 'layout' : 'component', slug: match[2] }
 }
 
-function collect(
-  modules: Record<string, { default: ComponentType }>,
-  sources: Record<string, string>,
-): Experiment[] {
+function filesFor(category: Experiment['category'], slug: string): ExperimentFile[] {
+  const dir = category === 'layout' ? 'layouts' : 'components'
+  const prefix = `/src/experiments/${dir}/${slug}/`
+  return Object.entries(rawFiles)
+    .filter(([path]) => path.startsWith(prefix))
+    .map(([path, code]) => ({ path: path.slice(prefix.length), code }))
+    .filter(({ path }) => path !== 'meta.ts' && !path.startsWith('controls/'))
+    .sort((a, b) => {
+      if (a.path === 'Component.tsx') return -1
+      if (b.path === 'Component.tsx') return 1
+      return a.path.localeCompare(b.path)
+    })
+}
+
+function collect(modules: Record<string, { default: ComponentType }>): Experiment[] {
   return Object.entries(modules).map(([path, mod]) => {
     const { category, slug } = parsePath(path)
     const dir = category === 'layout' ? 'layouts' : 'components'
@@ -53,16 +59,15 @@ function collect(
       slug,
       category,
       Component: mod.default,
-      source: sources[path],
-      css: styleSources[`/src/experiments/${dir}/${slug}/styles.css`],
+      files: filesFor(category, slug),
       ...meta,
     }
   })
 }
 
 export const experiments: Experiment[] = [
-  ...collect(componentModules, componentSources),
-  ...collect(layoutModules, layoutSources),
+  ...collect(componentModules),
+  ...collect(layoutModules),
 ].sort(
   (a, b) => a.category.localeCompare(b.category) || a.title.localeCompare(b.title),
 )
