@@ -1,15 +1,17 @@
 # Draggable dashboard
 
 A data dashboard whose differentiator is layout freedom: every widget drags
-freely anywhere on the canvas, and can **optionally** snap to a grid while
-dragging and on drop. Built with `@dnd-kit/core` (`useDraggable`) plus
-`@dnd-kit/modifiers` (`createSnapModifier`, `restrictToParentElement`).
+freely anywhere on the canvas and can be resized from its bottom-right corner,
+both **optionally** snapping to a grid (drag and drop, resize step). Built with
+`@dnd-kit/core` (`useDraggable`) plus `@dnd-kit/modifiers` (`createSnapModifier`,
+`restrictToParentElement`); resize is a plain pointer-capture handle
+(`ResizeHandle`) driving the same `{x,y,w,h}` layout model.
 
-**Step 1 of a multi-step build.** This step is the enterprise-app shell (nav
-rail with logo, top bar with user avatar) around the drag/snap canvas, still
-holding labelled placeholder cards. Still to come: real data-heavy widgets (KPI
-tiles, table, activity feed), chart widgets, overlap handling, and layout
-persistence.
+**Steps 1–2 of a multi-step build.** So far: the enterprise-app shell (nav rail
+with logo, top bar with user avatar) around the drag/snap canvas, plus
+corner-resize, still holding labelled placeholder cards. Still to come: real
+data-heavy widgets (KPI tiles, table, activity feed), chart widgets, overlap
+handling, and layout persistence.
 
 The shell (`DashboardShell`, `NavSidebar`, `TopBar`, …) is the piece; the nav
 selection is visual only (highlight + top-bar title follow the click, the canvas
@@ -25,10 +27,11 @@ toggle, grid size, grid overlay, reset layout.
 Free-canvas positioning has no established fully-accessible pattern. Each widget
 has a real `<button>` drag handle, and dnd-kit's `KeyboardSensor` makes it
 keyboard-operable (focus the handle, Space to pick up, arrow keys to move, Space
-to drop) with dnd-kit's default screen-reader announcements. Gaps that remain in
-step 1: the keyboard step is dnd-kit's default 25px rather than the current grid
-size, and there is no explicit "reset this widget" affordance for keyboard users
-beyond the global Reset layout button. Tracked for a later step.
+to drop) with dnd-kit's default screen-reader announcements. Gaps that remain:
+the keyboard step is dnd-kit's default 25px rather than the current grid size,
+corner resize is pointer-only with no keyboard equivalent yet, and there is no
+explicit "reset this widget" affordance for keyboard users beyond the global
+Reset layout button. Tracked for a later step.
 
 The oversized top-bar page title is a decorative watermark — a near-invisible
 `-webkit-text-stroke` outline in `--color-border`, far below AA text contrast.
@@ -67,10 +70,3 @@ and the page title uses `-webkit-text-stroke` (prefixed but broadly
 implemented). Older engines drop those declarations — no glow, and the title
 loses its outline and falls back to the `--bg` fill (fully invisible). Nothing
 else depends on either.
-
-The oversized page title is drawn as outlined text — `-webkit-text-stroke` in
-the accent with a near-transparent accent fill. The property is prefixed but
-implemented across current Chrome, Firefox, and Safari; without it the title
-falls back to the faint fill alone (very low contrast). The accent stroke on
-the bar background clears WCAG AA for large text (≥3:1) in both themes, and the
-current page is also indicated by the active nav item.

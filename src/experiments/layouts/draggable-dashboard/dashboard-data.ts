@@ -25,6 +25,10 @@ export const GRID_SIZE_MIN = 8
 export const GRID_SIZE_MAX = 48
 export const GRID_SIZE_STEP = 4
 
+// Smallest a widget can be resized to — grid-aligned to the default grid.
+export const MIN_W = GRID_SIZE_DEFAULT * 4
+export const MIN_H = GRID_SIZE_DEFAULT * 4
+
 export const CANVAS_HEIGHT = 460
 
 // ── App shell (nav + top bar) ────────────────────────────────────────────────

@@ -2,6 +2,7 @@ import type { ButtonHTMLAttributes, CSSProperties } from 'react'
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { cn } from '@/lib/cn'
+import { ResizeHandle } from './ResizeHandle'
 import { WidgetCard } from './WidgetCard'
 import type { WidgetPos } from './layout'
 
@@ -9,9 +10,25 @@ interface DraggableWidgetProps {
   id: string
   title: string
   pos: WidgetPos
+  snap: boolean
+  gridSize: number
+  maxW: number
+  maxH: number
+  onResizeStart: () => void
+  onResize: (w: number, h: number) => void
 }
 
-export function DraggableWidget({ id, title, pos }: DraggableWidgetProps) {
+export function DraggableWidget({
+  id,
+  title,
+  pos,
+  snap,
+  gridSize,
+  maxW,
+  maxH,
+  onResizeStart,
+  onResize,
+}: DraggableWidgetProps) {
   const {
     attributes,
     listeners,
@@ -45,6 +62,17 @@ export function DraggableWidget({ id, title, pos }: DraggableWidgetProps) {
         handleProps={
           { ...listeners, ...attributes } as ButtonHTMLAttributes<HTMLButtonElement>
         }
+      />
+      <ResizeHandle
+        title={title}
+        width={pos.w}
+        height={pos.h}
+        snap={snap}
+        gridSize={gridSize}
+        maxW={maxW}
+        maxH={maxH}
+        onResizeStart={onResizeStart}
+        onResize={onResize}
       />
     </div>
   )

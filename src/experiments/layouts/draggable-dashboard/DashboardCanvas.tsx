@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import {
   DndContext,
   KeyboardSensor,
@@ -24,6 +24,7 @@ interface DashboardCanvasProps {
   gridSize: number
   showGrid: boolean
   onMove: (id: string, x: number, y: number) => void
+  onResize: (id: string, w: number, h: number) => void
 }
 
 export function DashboardCanvas({
@@ -33,8 +34,17 @@ export function DashboardCanvas({
   gridSize,
   showGrid,
   onMove,
+  onResize,
 }: DashboardCanvasProps) {
   const canvasRef = useRef<HTMLDivElement>(null)
+  // Measured when a resize starts, so each widget's max size tracks the live
+  // canvas box (which can change with the window) rather than a stale value.
+  const [canvasSize, setCanvasSize] = useState<{ width: number; height: number } | null>(null)
+
+  const handleResizeStart = () => {
+    const bounds = canvasRef.current?.getBoundingClientRect()
+    if (bounds) setCanvasSize({ width: bounds.width, height: bounds.height })
+  }
 
   // A few px of travel before a drag starts, so a plain click / keyboard focus
   // on the handle still works.
@@ -72,14 +82,29 @@ export function DashboardCanvas({
 
   const gridOverlay = showGrid ? <GridOverlay gridSize={gridSize} /> : null
 
-  const widgetNodes = widgets.map((widget) => (
-    <DraggableWidget
-      key={widget.id}
-      id={widget.id}
-      title={widget.title}
-      pos={layout[widget.id] ?? widget}
-    />
-  ))
+  const widgetNodes = widgets.map((widget) => {
+    const pos = layout[widget.id] ?? widget
+    const maxW = canvasSize
+      ? Math.max(0, canvasSize.width - pos.x)
+      : Number.MAX_SAFE_INTEGER
+    const maxH = canvasSize
+      ? Math.max(0, canvasSize.height - pos.y)
+      : Number.MAX_SAFE_INTEGER
+    return (
+      <DraggableWidget
+        key={widget.id}
+        id={widget.id}
+        title={widget.title}
+        pos={pos}
+        snap={snap}
+        gridSize={gridSize}
+        maxW={maxW}
+        maxH={maxH}
+        onResizeStart={handleResizeStart}
+        onResize={(w, h) => onResize(widget.id, w, h)}
+      />
+    )
+  })
 
   return (
     <DndContext sensors={sensors} modifiers={modifiers} onDragEnd={handleDragEnd}>

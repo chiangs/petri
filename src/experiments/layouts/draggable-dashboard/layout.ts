@@ -18,6 +18,7 @@ export interface DashboardState {
 
 export type DashboardAction =
   | { type: 'MOVE_WIDGET'; id: string; x: number; y: number }
+  | { type: 'RESIZE_WIDGET'; id: string; w: number; h: number }
   | { type: 'SET_SNAP'; value: boolean }
   | { type: 'SET_GRID_SIZE'; value: number }
   | { type: 'SET_SHOW_GRID'; value: boolean }
@@ -59,6 +60,17 @@ export function dashboardReducer(
         layout: {
           ...state.layout,
           [action.id]: { ...current, x: action.x, y: action.y },
+        },
+      }
+    }
+    case 'RESIZE_WIDGET': {
+      const current = state.layout[action.id]
+      if (!current) return state
+      return {
+        ...state,
+        layout: {
+          ...state.layout,
+          [action.id]: { ...current, w: action.w, h: action.h },
         },
       }
     }

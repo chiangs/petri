@@ -24,6 +24,10 @@ export default function Component() {
     dispatch({ type: 'MOVE_WIDGET', id, x, y })
   }
 
+  const handleResize = (id: string, w: number, h: number) => {
+    dispatch({ type: 'RESIZE_WIDGET', id, w, h })
+  }
+
   const sidebar = (
     <NavSidebar
       appName={APP_NAME}
@@ -53,6 +57,7 @@ export default function Component() {
           gridSize={state.gridSize}
           showGrid={state.showGrid}
           onMove={handleMove}
+          onResize={handleResize}
         />
       </DashboardShell>
     </div>
